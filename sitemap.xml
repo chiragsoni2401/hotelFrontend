@@ -15,7 +15,7 @@
   <!-- Booking Page (Critical for Hotel Schema) -->
   <url>
     <loc>https://royalinnambaji.com/#rooms</loc>
-	<imge:image>
+	<image:image>
 	<image:loc>https://royalinnambaji.com/images/super_deluxe1.jpeg</image:loc>
 	<image:caption>Super Deluxe Room at Royal Inn Hotel Ambaji</image:caption>
 	</image:image>
