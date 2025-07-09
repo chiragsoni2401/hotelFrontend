@@ -224,7 +224,7 @@ image: "images/IMG-20250510-WA0006.jpg",
                 images : [
     {
       src: "images/IMG-20250510-WA0006.jpg",
-      alt: "Room image 1"
+      alt: "Room Near Ambaji Temple"
     }
   ]            },
   {
@@ -242,7 +242,7 @@ image: "images/IMG-20250510-WA0006.jpg",
                 images : [
     {
       src: "images/family4_1.jpeg",
-      alt: "Room image 1"
+      alt: "Hotel Near Ambaji Temple"
     }
   ]
             },
@@ -261,7 +261,7 @@ image: "images/IMG-20250510-WA0006.jpg",
                 images : [
     {
       src: "images/family5_1.jpeg",
-      alt: "Room image 1"
+      alt: "Family Room Near Ambaji Temple"
     }
   ]
             },
@@ -280,11 +280,11 @@ image: "images/IMG-20250510-WA0006.jpg",
                 images : [
     {
       src: "images/Family7_1.jpeg",
-      alt: "Room image 1"
+      alt: "Book Room Near Ambaji Temple"
     },
     {
       src: "images/Family7_2.jpeg",
-      alt: "Room image 2"
+      alt: "AC Room Near Ambaji Temple"
     }
   ]
             }
