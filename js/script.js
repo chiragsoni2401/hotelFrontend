@@ -1311,6 +1311,10 @@ function validateDates() {
     }
 }
 
+  //Make first api call to the backend so that inactive instance will become active so the next onwards api calls will be served quickly.
+            firstAPICallToBackend();
+
+
 
 
 // Re-validate when either date changes
