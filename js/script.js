@@ -1431,7 +1431,7 @@ function getTimeDiff(ms) {
 }
 
 function updatePopupTimer(start, end) {
-    const offerStartDate = new Date(start); // Start from 21 July 2025
+    const offerStartDate = new Date(start+ "T00:00:00"); // Start from 21 July 2025
     const offerEndDate = new Date(end + "T23:59:59");   // Ends on the last day/end date before the next day starts
     const timerElement = document.getElementById('discount-timer');
     const popupElement = document.getElementById('discount-popup');
