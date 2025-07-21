@@ -1,6 +1,16 @@
+//banner config
+var config = {
+    isDiscountActive: true,
+    discountPercent: 25,
+    offerStartDate: "2025-07-21T00:00:00",
+    offerEndDate: "2025-07-30T23:59:59",
+    freeBreakfast: true,
+    freeLunch: true,
+    noChildCharge: true
+};
+window.addEventListener('DOMContentLoaded', getDiscount);
 
-        
-        // Hero Slider Functionality
+// Hero Slider Functionality
 // Hero Slider Functionality
 function initHeroSlider() {
     const slides = document.querySelectorAll('.hero-slide');
@@ -90,290 +100,293 @@ function init() {
     setMinDates();
     initHeroSlider();
 }
-        // Sample room data - in a real app, this would come from your backend
-        var globalRoomPrice = 0; // Base room price
-        //There are total 35 rooms in hotel
-        const rooms = [
+// Sample room data - in a real app, this would come from your backend
+var globalRoomPrice = 0; // Base room price
+//There are total 35 rooms in hotel
+const rooms = [
+    {
+        id: 1,
+        title: "Deluxe",
+        roomType: "deluxe",
+        description: "Our Deluxe Rooms offer a perfect blend of comfort and style. Featuring a king-size bed, luxurious linens, and a spacious bathroom with premium amenities.",
+        price: 1800,
+        childCharge: 300,
+        size: "1200 sq ft",
+        quantity: 22,
+        capacity: "2 Adults, 1 Child",
+        amenities: ["Free WiFi", "55\" Smart TV", "Coffee Maker", "Air Conditioning", "Rainfall Shower"],
+        image: "images/deluxe1.jpeg",
+        images: [
             {
-                id: 1,
-                title: "Deluxe",
-                roomType: "deluxe",
-                description: "Our Deluxe Rooms offer a perfect blend of comfort and style. Featuring a king-size bed, luxurious linens, and a spacious bathroom with premium amenities.",
-                price: 1800,
-                childCharge:300,
-                size: "1200 sq ft",
-                quantity:22,
-                capacity: "2 Adults, 1 Child",
-                amenities: ["Free WiFi", "55\" Smart TV", "Coffee Maker", "Air Conditioning", "Rainfall Shower"],
-                image: "images/deluxe1.jpeg",
-                images : [
-    {
-      src: "images/deluxe1.jpeg",
-      alt: "Room image 1"
-    },
-    {
-      src: "images/deluxe2.jpeg",
-      alt: "Room image 2"
-    },
-    {
-      src: "images/deluxe3.jpeg",
-      alt: "Room image 3"
-    },
-    {
-      src: "images/deluxe4.jpeg",
-      alt: "Room image 4"
-    }
-  ]
-            },
-                    {
-                id: 2,
-                title: "Super Deluxe",
-                roomType: "superdeluxe",
-                description: "Our Deluxe Rooms offer a perfect blend of comfort and style. Featuring a king-size bed, luxurious linens, and a spacious bathroom with premium amenities.",
-                price: 3500,
-                childCharge:300,
-                size: "1200 sq ft",
-                quantity:2,
-                capacity: "2 Adults, 1 Child",
-                amenities: ["Free WiFi", "55\" Smart TV", "Coffee Maker", "Air Conditioning", "Rainfall Shower"],
-                image: "images/super_deluxe1.jpeg",
-                images : [
-    {
-      src: "images/super_deluxe1.jpeg",
-      alt: "Room image 1"
-    },
-    {
-      src: "images/super_deluxe1_1.jpg",
-      alt: "Room image 2"
-    },
-    ,
-    {
-      src: "images/super_deluxe1_2.jpg",
-      alt: "Room image 2"
-    }
-  ]
+                src: "images/deluxe1.jpeg",
+                alt: "Room image 1"
             },
             {
-                id: 3,
-                title: "Executive Suite",
-                roomType: "esuite",
-                description: "The Executive Suite provides extra space with a separate living area, perfect for business travelers or those seeking additional comfort.",
-                price: 7000,
-                childCharge:500,
-                size: "1200 sq ft",
-                quantity:1,
-                capacity: "2 Adults, 1 Child",
-                amenities: ["Free WiFi", "65\" Smart TV", "Mini Bar", "Air Conditioning", "Jacuzzi", "Work Desk"],
- image: "images/suite1_1.jpeg",
-                images : [
-    {
-      src: "images/suite1_1.jpeg",
-      alt: "Room image 1"
-    },
-    {
-      src: "images/suite1_2.jpeg",
-      alt: "Room image 2"
-    },
-    {
-      src: "images/IMG-20250510-WA0015.jpg",
-      alt: "Room image 3"
-    },
-    {
-      src: "images/IMG-20250510-WA0004.jpg",
-      alt: "Suite Bathroom"
-    }
-  ]            },
-            {
-                id: 4,
-                title: "Presidential Suite",
-                roomType: "psuite",
-                description: "Our most luxurious accommodation, the Presidential Suite features a spacious bedroom, living room, dining area, and stunning city views.",
-                price: 7000,
-                childCharge:500,
-                size: "1200 sq ft",
-                quantity:1,
-                capacity: "2 Adults, 1 Children",
-                amenities: ["Free WiFi", "75\" Smart TV", "Full Kitchen", "Air Conditioning", "Spa Bath", "Butler Service"],
-image: "images/suite2_1.jpeg",
-                images : [
-    {
-      src: "images/suite2_1.jpeg",
-      alt: "Room image 1"
-    },
-    {
-      src: "images/suite2_3.jpg",
-      alt: "Room image 2"
-    },
-    {
-      src: "images/IMG-20250510-WA0005.jpg",
-      alt: "Room image 3"
-    }
-  ]            },
-    {
-                id: 5,
-                title: "Royal Suite",
-                roomType: "rsuite",
-                description: "Our most luxurious accommodation, the Royal Suite features a spacious bedroom, living room, dining area, and stunning city views.",
-                price: 7000,
-                childCharge:500,
-                size: "1200 sq ft",
-                quantity:1,
-                capacity: "2 Adults, 1 Children",
-                amenities: ["Free WiFi", "75\" Smart TV", "Full Kitchen", "Air Conditioning", "Spa Bath", "Butler Service"],
-image: "images/IMG-20250510-WA0006.jpg",
-                images : [
-    {
-      src: "images/IMG-20250510-WA0006.jpg",
-      alt: "Room Near Ambaji Temple"
-    }
-  ]            },
-  {
-                id: 6,
-                title: "Family Four",
-                roomType: "family4",
-                description: "Our Family Rooms offer a perfect blend of comfort and style. Featuring a king-size bed, luxurious linens, and a spacious bathroom with premium amenities.",
-                price: 2800,
-                childCharge:300,
-                size: "1250 sq ft",
-                quantity:3,
-                capacity: "4 Adults",
-                amenities: ["Free WiFi", "55\" Smart TV", "Coffee Maker", "Air Conditioning", "Rainfall Shower"],
-                image: "images/family4_1.jpeg",
-                images : [
-    {
-      src: "images/family4_1.jpeg",
-      alt: "Hotel Near Ambaji Temple"
-    }
-  ]
+                src: "images/deluxe2.jpeg",
+                alt: "Room image 2"
             },
             {
-                id: 7,
-                title: "Family Five",
-                roomType: "family5",
-                description: "Our Family Rooms offer a perfect blend of comfort and style. Featuring a king-size bed, luxurious linens, and a spacious bathroom with premium amenities.",
-                price: 3500,
-                childCharge:300,
-                size: "1300 sq ft",
-                quantity:3,
-                capacity: "5 Adults",
-                amenities: ["Free WiFi", "55\" Smart TV", "Coffee Maker", "Air Conditioning", "Rainfall Shower"],
-                image: "images/family5_1.jpeg",
-                images : [
-    {
-      src: "images/family5_1.jpeg",
-      alt: "Family Room Near Ambaji Temple"
-    }
-  ]
+                src: "images/deluxe3.jpeg",
+                alt: "Room image 3"
             },
             {
-                id: 8,
-                title: "Family Seven",
-                roomType: "family7",
-                description: "Our Family Rooms offer a perfect blend of comfort and style. Featuring a king-size bed, luxurious linens, and a spacious bathroom with premium amenities.",
-                price: 4900,
-                childCharge:300,
-                size: "1400 sq ft",
-                quantity:2,
-                capacity: "7 Adults",
-                amenities: ["Free WiFi", "55\" Smart TV", "Coffee Maker", "Air Conditioning", "Rainfall Shower"],
-                image: "images/Family7_1.jpeg",
-                images : [
-    {
-      src: "images/Family7_1.jpeg",
-      alt: "Book Room Near Ambaji Temple"
-    },
-    {
-      src: "images/Family7_2.jpeg",
-      alt: "AC Room Near Ambaji Temple"
-    }
-  ]
+                src: "images/deluxe4.jpeg",
+                alt: "Room image 4"
             }
-        ];
+        ]
+    },
+    {
+        id: 2,
+        title: "Super Deluxe",
+        roomType: "superdeluxe",
+        description: "Our Deluxe Rooms offer a perfect blend of comfort and style. Featuring a king-size bed, luxurious linens, and a spacious bathroom with premium amenities.",
+        price: 3500,
+        childCharge: 300,
+        size: "1200 sq ft",
+        quantity: 2,
+        capacity: "2 Adults, 1 Child",
+        amenities: ["Free WiFi", "55\" Smart TV", "Coffee Maker", "Air Conditioning", "Rainfall Shower"],
+        image: "images/super_deluxe1.jpeg",
+        images: [
+            {
+                src: "images/super_deluxe1.jpeg",
+                alt: "Room image 1"
+            },
+            {
+                src: "images/super_deluxe1_1.jpg",
+                alt: "Room image 2"
+            },
+            ,
+            {
+                src: "images/super_deluxe1_2.jpg",
+                alt: "Room image 2"
+            }
+        ]
+    },
+    {
+        id: 3,
+        title: "Executive Suite",
+        roomType: "esuite",
+        description: "The Executive Suite provides extra space with a separate living area, perfect for business travelers or those seeking additional comfort.",
+        price: 7000,
+        childCharge: 500,
+        size: "1200 sq ft",
+        quantity: 1,
+        capacity: "2 Adults, 1 Child",
+        amenities: ["Free WiFi", "65\" Smart TV", "Mini Bar", "Air Conditioning", "Jacuzzi", "Work Desk"],
+        image: "images/suite1_1.jpeg",
+        images: [
+            {
+                src: "images/suite1_1.jpeg",
+                alt: "Room image 1"
+            },
+            {
+                src: "images/suite1_2.jpeg",
+                alt: "Room image 2"
+            },
+            {
+                src: "images/IMG-20250510-WA0015.jpg",
+                alt: "Room image 3"
+            },
+            {
+                src: "images/IMG-20250510-WA0004.jpg",
+                alt: "Suite Bathroom"
+            }
+        ]
+    },
+    {
+        id: 4,
+        title: "Presidential Suite",
+        roomType: "psuite",
+        description: "Our most luxurious accommodation, the Presidential Suite features a spacious bedroom, living room, dining area, and stunning city views.",
+        price: 7000,
+        childCharge: 500,
+        size: "1200 sq ft",
+        quantity: 1,
+        capacity: "2 Adults, 1 Children",
+        amenities: ["Free WiFi", "75\" Smart TV", "Full Kitchen", "Air Conditioning", "Spa Bath", "Butler Service"],
+        image: "images/suite2_1.jpeg",
+        images: [
+            {
+                src: "images/suite2_1.jpeg",
+                alt: "Room image 1"
+            },
+            {
+                src: "images/suite2_3.jpg",
+                alt: "Room image 2"
+            },
+            {
+                src: "images/IMG-20250510-WA0005.jpg",
+                alt: "Room image 3"
+            }
+        ]
+    },
+    {
+        id: 5,
+        title: "Royal Suite",
+        roomType: "rsuite",
+        description: "Our most luxurious accommodation, the Royal Suite features a spacious bedroom, living room, dining area, and stunning city views.",
+        price: 7000,
+        childCharge: 500,
+        size: "1200 sq ft",
+        quantity: 1,
+        capacity: "2 Adults, 1 Children",
+        amenities: ["Free WiFi", "75\" Smart TV", "Full Kitchen", "Air Conditioning", "Spa Bath", "Butler Service"],
+        image: "images/IMG-20250510-WA0006.jpg",
+        images: [
+            {
+                src: "images/IMG-20250510-WA0006.jpg",
+                alt: "Room Near Ambaji Temple"
+            }
+        ]
+    },
+    {
+        id: 6,
+        title: "Family Four",
+        roomType: "family4",
+        description: "Our Family Rooms offer a perfect blend of comfort and style. Featuring a king-size bed, luxurious linens, and a spacious bathroom with premium amenities.",
+        price: 2800,
+        childCharge: 300,
+        size: "1250 sq ft",
+        quantity: 3,
+        capacity: "4 Adults",
+        amenities: ["Free WiFi", "55\" Smart TV", "Coffee Maker", "Air Conditioning", "Rainfall Shower"],
+        image: "images/family4_1.jpeg",
+        images: [
+            {
+                src: "images/family4_1.jpeg",
+                alt: "Hotel Near Ambaji Temple"
+            }
+        ]
+    },
+    {
+        id: 7,
+        title: "Family Five",
+        roomType: "family5",
+        description: "Our Family Rooms offer a perfect blend of comfort and style. Featuring a king-size bed, luxurious linens, and a spacious bathroom with premium amenities.",
+        price: 3500,
+        childCharge: 300,
+        size: "1300 sq ft",
+        quantity: 3,
+        capacity: "5 Adults",
+        amenities: ["Free WiFi", "55\" Smart TV", "Coffee Maker", "Air Conditioning", "Rainfall Shower"],
+        image: "images/family5_1.jpeg",
+        images: [
+            {
+                src: "images/family5_1.jpeg",
+                alt: "Family Room Near Ambaji Temple"
+            }
+        ]
+    },
+    {
+        id: 8,
+        title: "Family Seven",
+        roomType: "family7",
+        description: "Our Family Rooms offer a perfect blend of comfort and style. Featuring a king-size bed, luxurious linens, and a spacious bathroom with premium amenities.",
+        price: 4900,
+        childCharge: 300,
+        size: "1400 sq ft",
+        quantity: 2,
+        capacity: "7 Adults",
+        amenities: ["Free WiFi", "55\" Smart TV", "Coffee Maker", "Air Conditioning", "Rainfall Shower"],
+        image: "images/Family7_1.jpeg",
+        images: [
+            {
+                src: "images/Family7_1.jpeg",
+                alt: "Book Room Near Ambaji Temple"
+            },
+            {
+                src: "images/Family7_2.jpeg",
+                alt: "AC Room Near Ambaji Temple"
+            }
+        ]
+    }
+];
 
-        // DOM Elements
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-        //const bookingForm = document.getElementById('bookingForm');
-        const roomsGrid = document.getElementById('roomsGrid');
-        const roomModal = document.getElementById('roomModal');
-        const closeModalBtns = document.querySelectorAll('.close-modal');
-        const modalRoomTitle = document.getElementById('modalRoomTitle');
-        const modalRoomDescription = document.getElementById('modalRoomDescription');
-        const modalRoomAmenities = document.getElementById('modalRoomAmenities');
-        const modalRoomPrice = document.getElementById('modalRoomPrice');
-        const modalChildCharge = document.getElementById('modalChildCharge');
-        const modalTotalPrice = document.getElementById('modalTotalPrice');
-        const modalRoomGallery = document.getElementById("modalRoomGallery");
-        const modalRoomId = document.getElementById('modalRoomId');
-        const modalRoomType = document.getElementById('modalRoomType');
-        const modalBookingForm = document.getElementById('modalBookingForm');
-        const successModal = document.getElementById('successModal');
-        const closeSuccessModal = document.getElementById('closeSuccessModal');
-        const successMessage = document.getElementById('successMessage');
-        const testimonialSlides = document.querySelectorAll('.testimonial');
-        const sliderDots = document.querySelectorAll('.slider-dot');
-        const paymentModal = document.getElementById('paymentModal');
-        const proceedPaymentModal = document.getElementById('proceedPaymentModal');
-        const successMessageGreen =  document.getElementById('successMessageGreen');
-        const paymentMessage = document.getElementById('paymentMessage');
-        const checkinInput = document.getElementById('modalCheckin');
-        const checkoutInput = document.getElementById('modalCheckout');
-        const childrenSelect = document.getElementById('modalChildren');
-        const childrenValidation = document.getElementById('childrenValidation');
-        const gstCheckbox = document.getElementById('modalIncludeGST');
-        
-        const extraChildCharge = document.getElementById('extraChildCharge');
-        const extraChildChargeLabel = document.getElementById('extraChildChargeLabel');
-        
-        const extraChildAmount = document.getElementById('extraChildAmount');
-        const roomCharges = document.getElementById('roomCharges');
-        const roomChargesAmount = document.getElementById('roomChargesAmount');
-        const roomChargesLabel = document.getElementById('roomChargesLabel');
-        const gstCharge = document.getElementById('gstCharge');
-        const gstAmount = document.getElementById('gstAmount');
-        const gstChargeLabel = document.getElementById('gstChargeLabel');
+// DOM Elements
+const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+const navLinks = document.querySelector('.nav-links');
+//const bookingForm = document.getElementById('bookingForm');
+const roomsGrid = document.getElementById('roomsGrid');
+const roomModal = document.getElementById('roomModal');
+const closeModalBtns = document.querySelectorAll('.close-modal');
+const modalRoomTitle = document.getElementById('modalRoomTitle');
+const modalRoomDescription = document.getElementById('modalRoomDescription');
+const modalRoomAmenities = document.getElementById('modalRoomAmenities');
+const modalRoomPrice = document.getElementById('modalRoomPrice');
+const modalChildCharge = document.getElementById('modalChildCharge');
+const modalTotalPrice = document.getElementById('modalTotalPrice');
+const modalRoomGallery = document.getElementById("modalRoomGallery");
+const modalRoomId = document.getElementById('modalRoomId');
+const modalRoomType = document.getElementById('modalRoomType');
+const modalBookingForm = document.getElementById('modalBookingForm');
+const successModal = document.getElementById('successModal');
+const closeSuccessModal = document.getElementById('closeSuccessModal');
+const successMessage = document.getElementById('successMessage');
+const testimonialSlides = document.querySelectorAll('.testimonial');
+const sliderDots = document.querySelectorAll('.slider-dot');
+const paymentModal = document.getElementById('paymentModal');
+const proceedPaymentModal = document.getElementById('proceedPaymentModal');
+const successMessageGreen = document.getElementById('successMessageGreen');
+const paymentMessage = document.getElementById('paymentMessage');
+const checkinInput = document.getElementById('modalCheckin');
+const checkoutInput = document.getElementById('modalCheckout');
+const childrenSelect = document.getElementById('modalChildren');
+const childrenValidation = document.getElementById('childrenValidation');
+const gstCheckbox = document.getElementById('modalIncludeGST');
 
-        const totalPrice = document.getElementById('modalTotalPrice');
+const extraChildCharge = document.getElementById('extraChildCharge');
+const extraChildChargeLabel = document.getElementById('extraChildChargeLabel');
 
-        const gstInput = document.getElementById('modalGSTIN');
-        const gstWarning = document.querySelector('.gst-warning');
-        let currentSlide = 0;
+const extraChildAmount = document.getElementById('extraChildAmount');
+const roomCharges = document.getElementById('roomCharges');
+const roomChargesAmount = document.getElementById('roomChargesAmount');
+const roomChargesLabel = document.getElementById('roomChargesLabel');
+const gstCharge = document.getElementById('gstCharge');
+const gstAmount = document.getElementById('gstAmount');
+const gstChargeLabel = document.getElementById('gstChargeLabel');
 
-        // Mobile Menu Toggle
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+const totalPrice = document.getElementById('modalTotalPrice');
 
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-        });
-function firstAPICallToBackend(){
-            
-    fetch(`https://royalinnbackend.onrender.com/getAnyResponse`, {
-    method: 'GET'
-})
-.then(response => response.json())
-.then(data => {
-     
-    if (data.success && data) {
-        // First Show payment message to collect payment via QR code
-        
-    } 
-})
-.catch(error => {
-    console.error('Error:', error);
-   
+const gstInput = document.getElementById('modalGSTIN');
+const gstWarning = document.querySelector('.gst-warning');
+let currentSlide = 0;
+
+// Mobile Menu Toggle
+mobileMenuBtn.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
 });
+
+// Close mobile menu when clicking a link
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+    });
+});
+function firstAPICallToBackend() {
+
+    fetch(`https://royalinnbackend.onrender.com/getAnyResponse`, {
+        method: 'GET'
+    })
+        .then(response => response.json())
+        .then(data => {
+
+            if (data.success && data) {
+                // First Show payment message to collect payment via QR code
+
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+
+        });
 }
 function updateAdultOptions(roomType) {
     const adultsSelect = document.getElementById('modalAdults');
-    
+
     // Clear existing options
     adultsSelect.innerHTML = '';
-    
+
     // Create new options based on room type
     let options;
     if (roomType === 'deluxe' || roomType === 'superdeluxe' || roomType === 'psuite' || roomType === 'esuite' || roomType === 'rsuite') {
@@ -381,14 +394,14 @@ function updateAdultOptions(roomType) {
     } else if (roomType === 'family4') {
         options = [1, 2, 3, 4];
     } else if (roomType === 'family5') {
-        options = [1, 2, 3, 4,5];
+        options = [1, 2, 3, 4, 5];
     } else if (roomType === 'family7') {
-        options = [1, 2, 3, 4,5,6,7];
+        options = [1, 2, 3, 4, 5, 6, 7];
     } else {
         // Default options if room type is not recognized
-        options = [1,2];
+        options = [1, 2];
     }
-    
+
     // Add the new options to the select element
     options.forEach(value => {
         const option = document.createElement('option');
@@ -397,8 +410,8 @@ function updateAdultOptions(roomType) {
         adultsSelect.appendChild(option);
     });
 }
-        // Load rooms
-        let currentRoomSlide = 0;
+// Load rooms
+let currentRoomSlide = 0;
 let slidesToShow = 3; // Default number of slides to show
 
 function updateSlidesToShow() {
@@ -414,32 +427,56 @@ function updateSlidesToShow() {
 function loadRooms() {
     const roomsGrid = document.getElementById('roomsGrid');
     const dotsContainer = document.querySelector('.slider-dots');
-    
+
     roomsGrid.innerHTML = '';
     dotsContainer.innerHTML = '';
-    
+
     // Create room cards
     rooms.forEach((room, index) => {
         const roomCard = document.createElement('div');
         roomCard.className = 'room-card';
+        const originalPrice = room.price;
+        const discountedPrice = config.isDiscountActive
+            ? Math.round(originalPrice * (1 - config.discountPercent / 100))
+            : originalPrice;
+        // Create flags dynamically
+        let featureFlags = '';
+        if (config.freeBreakfast) {
+            featureFlags += `<div class="room-flag">Free Breakfast</div>`;
+        }
+        if (config.freeLunch) {
+            featureFlags += `<div class="room-flag">Free Lunch</div>`;
+        }
+        if (config.noChildCharge) {
+            featureFlags += `<div class="room-flag">No Child Charge Upto 5 Yrs</div>`;
+        }
         roomCard.innerHTML = `
-            <div class="room-img">
-                <img src="${room.image}" alt="${room.title}">
-            </div>
-            <div class="room-details">
-                <h3>${room.title}</h3>
-                <div class="room-features">
-                    <span><i class="fas fa-expand"></i> ${room.size}</span>
-                    <span><i class="fas fa-user-friends"></i> ${room.capacity}</span>
-                </div>
-                <div class="room-price">
-                    <span class="price">₹${room.price} <span>/ night</span></span>
-                    <a href="#" class="view-btn" data-room="${room.id}">View Details</a>
-                </div>
-            </div>
-        `;
+    <div class="room-img">
+        <img src="${room.image}" alt="${room.title}">
+        ${config.isDiscountActive ? `<div class="discount-flag">${config.discountPercent}% OFF</div>` : ''}
+        <div class="room-flags">
+      ${featureFlags}
+    </div>
+    </div>
+    <div class="room-details">
+        <h3>${room.title}</h3>
+        <div class="room-features">
+            <span><i class="fas fa-expand"></i> ${room.size}</span>
+            <span><i class="fas fa-user-friends"></i> ${room.capacity}</span>
+        </div>
+        <div class="room-price">
+            <span class="price">
+                ₹${discountedPrice} <span>/ night</span>
+                ${config.isDiscountActive ? `<span class="original-price">₹${originalPrice}</span>` : ''}
+            </span>
+            <a href="#" class="view-btn" data-room="${room.id}">View Details</a>
+        </div>
+    </div>
+`;
+
+
         roomsGrid.appendChild(roomCard);
-        
+
         // Create dots for navigation
         const dot = document.createElement('span');
         dot.classList.add('room-dot');
@@ -447,7 +484,7 @@ function loadRooms() {
         dot.addEventListener('click', () => goToSlide(index));
         dotsContainer.appendChild(dot);
     });
-    
+
     // Add event listeners to view buttons
     document.querySelectorAll('.view-btn[data-room]').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -456,18 +493,18 @@ function loadRooms() {
             openRoomModal(roomId);
         });
     });
-    
+
     // Add event listeners to navigation buttons
     document.querySelector('.room-prev-btn').addEventListener('click', roomPrevSlide);
     document.querySelector('.room-next-btn').addEventListener('click', RoomNextSlide);
-    
+
     // Update responsive settings
     updateSlidesToShow();
     window.addEventListener('resize', () => {
         updateSlidesToShow();
         updateSlider();
     });
-    
+
     // Initialize slider position
     updateSlider();
 }
@@ -476,17 +513,17 @@ function updateSlider() {
     const roomsGrid = document.getElementById('roomsGrid');
     const roomCards = document.querySelectorAll('.room-card');
     const dots = document.querySelectorAll('.room-dot');
-    
+
     if (roomCards.length === 0) return;
-    
+
     // Calculate the maximum slide index
     const maxSlide = Math.max(0, roomCards.length - slidesToShow);
     currentRoomSlide = Math.min(currentRoomSlide, maxSlide);
-    
+
     // Update slide position
     const cardWidth = roomCards[0].offsetWidth + 30; // Include gap
     roomsGrid.style.transform = `translateX(-${currentRoomSlide * cardWidth}px)`;
-    
+
     // Update active dots
     dots.forEach((dot, index) => {
         dot.classList.toggle('active', index >= currentRoomSlide && index < currentRoomSlide + slidesToShow);
@@ -496,7 +533,7 @@ function updateSlider() {
 function RoomNextSlide() {
     const roomCards = document.querySelectorAll('.room-card');
     const maxSlide = Math.max(0, roomCards.length - slidesToShow);
-    
+
     currentRoomSlide = (currentRoomSlide >= maxSlide) ? 0 : currentRoomSlide + 1;
     updateSlider();
 }
@@ -504,7 +541,7 @@ function RoomNextSlide() {
 function roomPrevSlide() {
     const roomCards = document.querySelectorAll('.room-card');
     const maxSlide = Math.max(0, roomCards.length - slidesToShow);
-    
+
     currentRoomSlide = (currentRoomSlide <= 0) ? maxSlide : currentRoomSlide - 1;
     updateSlider();
 }
@@ -529,206 +566,208 @@ function stopAutoSlide() {
 window.addEventListener('load', () => {
     loadRooms();
     startAutoSlide();
-    
+
     // Pause auto-slide when hovering over slider
     document.querySelector('.rooms-slider-container').addEventListener('mouseenter', stopAutoSlide);
     document.querySelector('.rooms-slider-container').addEventListener('mouseleave', startAutoSlide);
 });
 
-        // Open room modal
-        function openRoomModal(roomId) {
-            const room = rooms.find(r => r.id === roomId);
-            if (!room) return;
-            updateAdultOptions(room.roomType);
-            modalRoomTitle.textContent = room.title;
-            modalRoomDescription.textContent = room.description;
-            //modalTotalPrice.innerHTML = `$${room.price} <span>/ night</span>`;
-            modalRoomId.value = room.id;
-            modalRoomType.value = room.roomType;
-            modalRoomPrice.value = room.price; // Base room price
-            modalChildCharge.value = room.childCharge; // Extra charge per child
-            validateDates();
-            // Set Room Images dynamically for selected room
-            updateGallery(room);
-            // modalRoomGallery.innerHTML = "";
+// Open room modal
+function openRoomModal(roomId) {
+    const room = rooms.find(r => r.id === roomId);
+    if (!room) return;
+    updateAdultOptions(room.roomType);
+    modalRoomTitle.textContent = room.title;
+    modalRoomDescription.textContent = room.description;
+    //modalTotalPrice.innerHTML = `$${room.price} <span>/ night</span>`;
+    modalRoomId.value = room.id;
+    modalRoomType.value = room.roomType;
+    modalRoomPrice.value = config.isDiscountActive
+        ? Math.round(room.price * (1 - config.discountPercent / 100))
+        : room.price; // Base room price
+    modalChildCharge.value = (config.isDiscountActive && config.noChildCharge) ? 0 : room.childCharge; // Extra charge per child
+    validateDates();
+    // Set Room Images dynamically for selected room
+    updateGallery(room);
+    // modalRoomGallery.innerHTML = "";
 
-            // room.images.forEach((imgData, index) => {
-            // const img = document.createElement("img");
-            // img.src = imgData.src;
-            // img.alt = imgData.alt;
-            // img.className = index === 0 ? "gallery-slide active" : "gallery-slide";
-            // modalRoomGallery.appendChild(img);
-            // });
-            // Set amenities
-            // modalRoomAmenities.innerHTML = '';
-            // room.amenities.forEach(amenity => {
-            //     const li = document.createElement('li');
-            //     li.innerHTML = `<i class="fas fa-check"></i> ${amenity}`;
-            //     modalRoomAmenities.appendChild(li);
-            // });
+    // room.images.forEach((imgData, index) => {
+    // const img = document.createElement("img");
+    // img.src = imgData.src;
+    // img.alt = imgData.alt;
+    // img.className = index === 0 ? "gallery-slide active" : "gallery-slide";
+    // modalRoomGallery.appendChild(img);
+    // });
+    // Set amenities
+    // modalRoomAmenities.innerHTML = '';
+    // room.amenities.forEach(amenity => {
+    //     const li = document.createElement('li');
+    //     li.innerHTML = `<i class="fas fa-check"></i> ${amenity}`;
+    //     modalRoomAmenities.appendChild(li);
+    // });
 
-            // Set default dates from main booking form if available
-            //const checkin = document.getElementById('checkin').value;
-            //const checkout = document.getElementById('checkout').value;
-            //const adults = document.getElementById('adults').value;
-            //const children = document.getElementById('children').value;
+    // Set default dates from main booking form if available
+    //const checkin = document.getElementById('checkin').value;
+    //const checkout = document.getElementById('checkout').value;
+    //const adults = document.getElementById('adults').value;
+    //const children = document.getElementById('children').value;
 
-            // if (checkin) document.getElementById('modalCheckin').value = checkin;
-            // if (checkout) document.getElementById('modalCheckout').value = checkout;
-            // if (adults) document.getElementById('modalAdults').value = adults;
-            // if (children) document.getElementById('modalChildren').value = children;
-            
-            roomModal.style.display = 'block';
-            setupDateValidation();
-            calculateTotal();
-            document.body.style.overflow = 'hidden';
-            //Make first api call to the backend so that inactive instance will become active so the next onwards api calls will be served quickly.
-            firstAPICallToBackend();
-        }
+    // if (checkin) document.getElementById('modalCheckin').value = checkin;
+    // if (checkout) document.getElementById('modalCheckout').value = checkout;
+    // if (adults) document.getElementById('modalAdults').value = adults;
+    // if (children) document.getElementById('modalChildren').value = children;
 
-        // Close modal
-        function closeModal() {
-            roomModal.style.display = 'none';
-            successModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+    roomModal.style.display = 'block';
+    setupDateValidation();
+    calculateTotal();
+    document.body.style.overflow = 'hidden';
+    //Make first api call to the backend so that inactive instance will become active so the next onwards api calls will be served quickly.
+    firstAPICallToBackend();
+}
 
-        // Close modals when clicking outside
-        window.addEventListener('click', (e) => {
-            if (e.target === roomModal) {
-                closeModal();
-            }
-            if (e.target === successModal) {
-                closeModal();
-            }
-        });
+// Close modal
+function closeModal() {
+    roomModal.style.display = 'none';
+    successModal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
 
-        // Close modal buttons
-        closeModalBtns.forEach(btn => {
-            btn.addEventListener('click', closeModal);
-        });
+// Close modals when clicking outside
+window.addEventListener('click', (e) => {
+    if (e.target === roomModal) {
+        closeModal();
+    }
+    if (e.target === successModal) {
+        closeModal();
+    }
+});
 
-        closeSuccessModal.addEventListener('click', closeModal);
+// Close modal buttons
+closeModalBtns.forEach(btn => {
+    btn.addEventListener('click', closeModal);
+});
 
-        // Booking form submission
-        // bookingForm.addEventListener('submit', (e) => {
-        //     e.preventDefault();
-        //     // In a real app, this would check availability with your backend
-        //     // For now, we'll just open the first room modal
-        //     openRoomModal(1);
-        // });
+closeSuccessModal.addEventListener('click', closeModal);
 
-        // // Modal booking form submission
-        // modalBookingForm.addEventListener('submit', (e) => {
-        //     e.preventDefault();
-            
-        //     // Get form data
-        //     const formData = new FormData(modalBookingForm);
-        //     const bookingData = {
-        //         roomId: formData.get('roomId'),
-        //         checkin: formData.get('checkin'),
-        //         checkout: formData.get('checkout'),
-        //         adults: formData.get('adults'),
-        //         children: formData.get('children'),
-        //         specialRequests: formData.get('specialRequests')
-        //     };
-            
-        //     // In a real app, you would send this to your Google Apps Script backend
-        //     // For now, we'll simulate a successful booking
-        //     simulateBooking(bookingData);
-        // });
+// Booking form submission
+// bookingForm.addEventListener('submit', (e) => {
+//     e.preventDefault();
+//     // In a real app, this would check availability with your backend
+//     // For now, we'll just open the first room modal
+//     openRoomModal(1);
+// });
 
-        // Simulate booking submission
-        function simulateBooking(bookingData) {
-            // This is where you would normally call your Google Apps Script
-            // For example:
-            // const scriptURL = 'YOUR_GOOGLE_SCRIPT_URL';
-            // fetch(scriptURL, { method: 'POST', body: JSON.stringify(bookingData) })
-            //   .then(response => response.json())
-            //   .then(data => {
-            //       showSuccessModal(data);
-            //   })
-            //   .catch(error => {
-            //       console.error('Error:', error);
-            //   });
-            
-            // For demo purposes, we'll just show a success message
-            const room = rooms.find(r => r.id === parseInt(bookingData.roomId));
-            const checkinDate = new Date(bookingData.checkin).toLocaleDateString();
-            const checkoutDate = new Date(bookingData.checkout).toLocaleDateString();
-            
-            successMessage.innerHTML = `
+// // Modal booking form submission
+// modalBookingForm.addEventListener('submit', (e) => {
+//     e.preventDefault();
+
+//     // Get form data
+//     const formData = new FormData(modalBookingForm);
+//     const bookingData = {
+//         roomId: formData.get('roomId'),
+//         checkin: formData.get('checkin'),
+//         checkout: formData.get('checkout'),
+//         adults: formData.get('adults'),
+//         children: formData.get('children'),
+//         specialRequests: formData.get('specialRequests')
+//     };
+
+//     // In a real app, you would send this to your Google Apps Script backend
+//     // For now, we'll simulate a successful booking
+//     simulateBooking(bookingData);
+// });
+
+// Simulate booking submission
+function simulateBooking(bookingData) {
+    // This is where you would normally call your Google Apps Script
+    // For example:
+    // const scriptURL = 'YOUR_GOOGLE_SCRIPT_URL';
+    // fetch(scriptURL, { method: 'POST', body: JSON.stringify(bookingData) })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //       showSuccessModal(data);
+    //   })
+    //   .catch(error => {
+    //       console.error('Error:', error);
+    //   });
+
+    // For demo purposes, we'll just show a success message
+    const room = rooms.find(r => r.id === parseInt(bookingData.roomId));
+    const checkinDate = new Date(bookingData.checkin).toLocaleDateString();
+    const checkoutDate = new Date(bookingData.checkout).toLocaleDateString();
+
+    successMessage.innerHTML = `
                 Your reservation for the <strong>${room.title}</strong> has been confirmed.<br><br>
                 <strong>Check-in:</strong> ${checkinDate}<br>
                 <strong>Check-out:</strong> ${checkoutDate}<br>
                 <strong>Guests:</strong> ${bookingData.adults} Adults, ${bookingData.children} Children
             `;
-            
-            closeModal(); // Close the room modal
-            successModal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
 
-        // Testimonial slider
-        function showSlide(n) {
-            testimonialSlides.forEach(slide => slide.classList.remove('active'));
-            sliderDots.forEach(dot => dot.classList.remove('active'));
-            
-            currentSlide = (n + testimonialSlides.length) % testimonialSlides.length;
-            testimonialSlides[currentSlide].classList.add('active');
-            sliderDots[currentSlide].classList.add('active');
-        }
+    closeModal(); // Close the room modal
+    successModal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
 
-        sliderDots.forEach((dot, index) => {
-            dot.addEventListener('click', () => showSlide(index));
-        });
+// Testimonial slider
+function showSlide(n) {
+    testimonialSlides.forEach(slide => slide.classList.remove('active'));
+    sliderDots.forEach(dot => dot.classList.remove('active'));
 
-        // Auto-advance testimonials
-        setInterval(() => {
-            showSlide(currentSlide + 1);
-        }, 5000);
+    currentSlide = (n + testimonialSlides.length) % testimonialSlides.length;
+    testimonialSlides[currentSlide].classList.add('active');
+    sliderDots[currentSlide].classList.add('active');
+}
 
-        // Set minimum dates for booking forms
-        function setMinDates() {
-            const today = new Date();
-            const tomorrow = new Date(today);
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            
-            const formatDate = (date) => {
-                return date.toISOString().split('T')[0];
-            };
-            
-            //document.getElementById('checkin').min = formatDate(today);
-            //document.getElementById('checkout').min = formatDate(tomorrow);
-            document.getElementById('modalCheckin').min = formatDate(today);
-            document.getElementById('modalCheckout').min = formatDate(tomorrow);
-        }
+sliderDots.forEach((dot, index) => {
+    dot.addEventListener('click', () => showSlide(index));
+});
 
-        // Initialize the page
-        // function init() {
-        //     loadRooms();
-        //     setMinDates();
-        // }
+// Auto-advance testimonials
+setInterval(() => {
+    showSlide(currentSlide + 1);
+}, 5000);
 
-        // Run when DOM is loaded
-        document.addEventListener('DOMContentLoaded', init);
+// Set minimum dates for booking forms
+function setMinDates() {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
 
-        //Script for new modalroombookingform
-        const gstRate = 0.125; // 12.5% GST
-        
-        
-        // Add this JavaScript to handle the dynamic pricing
-    document.addEventListener('DOMContentLoaded', function() {
+    const formatDate = (date) => {
+        return date.toISOString().split('T')[0];
+    };
 
-        const toggleLink = document.querySelector('.toggle-policy');
+    //document.getElementById('checkin').min = formatDate(today);
+    //document.getElementById('checkout').min = formatDate(tomorrow);
+    document.getElementById('modalCheckin').min = formatDate(today);
+    document.getElementById('modalCheckout').min = formatDate(tomorrow);
+}
+
+// Initialize the page
+// function init() {
+//     loadRooms();
+//     setMinDates();
+// }
+
+// Run when DOM is loaded
+document.addEventListener('DOMContentLoaded', init);
+
+//Script for new modalroombookingform
+const gstRate = 0.125; // 12.5% GST
+
+
+// Add this JavaScript to handle the dynamic pricing
+document.addEventListener('DOMContentLoaded', function () {
+
+    const toggleLink = document.querySelector('.toggle-policy');
     if (toggleLink) {
-        toggleLink.addEventListener('click', function(e) {
+        toggleLink.addEventListener('click', function (e) {
             e.preventDefault();
             const policyContent = this.nextElementSibling;
             const icon = this.querySelector('i');
-            
+
             this.classList.toggle('active');
-            
+
             if (policyContent.style.display === 'none') {
                 policyContent.style.display = 'block';
             } else {
@@ -736,183 +775,183 @@ window.addEventListener('load', () => {
             }
         });
     }
-        // const gstRate = 0.125; // 12.5% GST
-        
-        // const childrenSelect = document.getElementById('modalChildren');
-        // const gstCheckbox = document.getElementById('modalIncludeGST');
-        // //const gstInput = document.getElementById('modalGSTIN');
-        
-        // const extraChildCharge = document.getElementById('extraChildCharge');
-        // const extraChildAmount = document.getElementById('extraChildAmount');
-        // const gstCharge = document.getElementById('gstCharge');
-        // const gstAmount = document.getElementById('gstAmount');
-        // const totalPrice = document.getElementById('modalTotalPrice');
+    // const gstRate = 0.125; // 12.5% GST
 
-        // // GSTIN Validation
-        // const gstInput = document.getElementById('modalGSTIN');
-        // const gstWarning = document.querySelector('.gst-warning');
-        
-        
-       
-        
-        // Toggle GSTIN field visibility
-        gstCheckbox.addEventListener('change', function() {
-            gstInput.style.display = this.checked ? 'block' : 'none';
-            if (!this.checked) {
-                gstInput.value = '';
-                gstInput.removeAttribute('required');
-            }else{ 
-              gstInput.setAttribute('required', '');
-            }
-            calculateTotal();
-        });
-        
-        // Validate GSTIN when entered
-        gstInput.addEventListener('input', function() {
-            validateGSTIN();
-            calculateTotal();
-        });
-        
-        // Calculate total when children count changes
-        childrenSelect.addEventListener('change', calculateTotal);
-        
-        
+    // const childrenSelect = document.getElementById('modalChildren');
+    // const gstCheckbox = document.getElementById('modalIncludeGST');
+    // //const gstInput = document.getElementById('modalGSTIN');
 
-       
-        
-        // Initial calculation
-        //calculateTotal();
+    // const extraChildCharge = document.getElementById('extraChildCharge');
+    // const extraChildAmount = document.getElementById('extraChildAmount');
+    // const gstCharge = document.getElementById('gstCharge');
+    // const gstAmount = document.getElementById('gstAmount');
+    // const totalPrice = document.getElementById('modalTotalPrice');
+
+    // // GSTIN Validation
+    // const gstInput = document.getElementById('modalGSTIN');
+    // const gstWarning = document.querySelector('.gst-warning');
+
+
+
+
+    // Toggle GSTIN field visibility
+    gstCheckbox.addEventListener('change', function () {
+        gstInput.style.display = this.checked ? 'block' : 'none';
+        if (!this.checked) {
+            gstInput.value = '';
+            gstInput.removeAttribute('required');
+        } else {
+            gstInput.setAttribute('required', '');
+        }
+        calculateTotal();
     });
-     function validateGSTIN() {
-            if (!gstCheckbox.checked) return;
-            
-            const gstin = gstInput.value;
-            const isValid = gstin.match(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/);
-            
-            if (gstin.length > 0 && !isValid) {
-                gstInput.classList.add('invalid');
-                gstWarning.style.display = 'block';
-            } else {
-                gstInput.classList.remove('invalid');
-                gstWarning.style.display = 'none';
-            }
-        }
 
-    function calculateTotal() {
-            validateGSTIN();
-            const childrenCount = parseInt(childrenSelect.value);
-            const includeGST = gstCheckbox.checked;
-            const gstinValid = gstInput.value.match(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/);
-            
-            // Calculate child charges
-            // Before calculating the child charge checkin and checkout dates has to be filled as this charge will be calculated for total nights(checkout-checkin)
-            //const checkin = document.getElementById('checkin').value;
-            //const checkout = document.getElementById('checkout').value;
-            const checkin = new Date(document.getElementById('modalCheckin').value);
-            const checkout = new Date(document.getElementById('modalCheckout').value);
+    // Validate GSTIN when entered
+    gstInput.addEventListener('input', function () {
+        validateGSTIN();
+        calculateTotal();
+    });
 
-            let totalNightsToStay = 0;
-           if (!isNaN(checkin.getTime()) && !isNaN(checkout.getTime())) {
-             totalNightsToStay = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
-           }
+    // Calculate total when children count changes
+    childrenSelect.addEventListener('change', calculateTotal);
 
-// Now calculate childCharges safely
-const childChargeValue = Number(modalChildCharge.value) || 0;
-const childCharges = childrenCount * childChargeValue * totalNightsToStay;
 
-roomChargesLabel.innerHTML = `Room Charge(${modalRoomPrice.value} x ${totalNightsToStay} nights):`;
-roomChargesAmount.textContent = `₹${(modalRoomPrice.value*(totalNightsToStay))}`;
-            if (childrenCount > 0) {
-                extraChildCharge.style.display = 'flex';
-                extraChildAmount.textContent = `₹${childCharges}`;
-                extraChildChargeLabel.innerHTML =  `Extra Child Charge(${childrenCount} x ₹${childChargeValue} x ${totalNightsToStay} nights):`;
-            } else {
-                extraChildCharge.style.display = 'none';
-            }
-            
-            // Calculate subtotal
-            let subtotal = (totalNightsToStay>0)?(+(modalRoomPrice.value*(totalNightsToStay)) + childCharges):(Number(modalRoomPrice.value));
-            
-            // Calculate GST if applicable
-            if (includeGST && gstinValid) {
-                const gst = subtotal * gstRate;
-                gstCharge.style.display = 'flex';
-                gstAmount.textContent = `₹${gst.toFixed(2)}`;
-                gstChargeLabel.innerHTML = `GST Charge(₹${subtotal} x  12.5%):`;//this line has to be here only otherwise calculation will be incorrect
-                subtotal += gst;
-            } else {
-                gstCharge.style.display = 'none';
-            }
-            
-            // Update total
-            totalPrice.textContent = `₹${subtotal.toFixed(2)}`;
-        }
 
-        // Gallery-specific JavaScript with unique variable names
-    // document.addEventListener('DOMContentLoaded', function() {
-    //     // Gallery elements
-    //     const gallerySlides = document.querySelectorAll('.gallery-slide');
-    //     const galleryIndicators = document.querySelectorAll('.gallery-indicator');
-    //     const galleryPrev = document.querySelector('.gallery-prev');
-    //     const galleryNext = document.querySelector('.gallery-next');
-    //     let currentGallerySlide = 0;
-        
-    //     function showGallerySlide(index) {
-    //         gallerySlides.forEach(slide => slide.classList.remove('active'));
-    //         galleryIndicators.forEach(indicator => indicator.classList.remove('active'));
-            
-    //         gallerySlides[index].classList.add('active');
-    //         galleryIndicators[index].classList.add('active');
-    //     }
-        
-    //     galleryNext.addEventListener('click', () => {
-    //         currentGallerySlide = (currentGallerySlide + 1) % gallerySlides.length;
-    //         showGallerySlide(currentGallerySlide);
-    //     });
-        
-    //     galleryPrev.addEventListener('click', () => {
-    //         currentGallerySlide = (currentGallerySlide - 1 + gallerySlides.length) % gallerySlides.length;
-    //         showGallerySlide(currentGallerySlide);
-    //     });
-        
-    //     galleryIndicators.forEach(indicator => {
-    //         indicator.addEventListener('click', () => {
-    //             currentGallerySlide = parseInt(indicator.getAttribute('data-index'));
-    //             showGallerySlide(currentGallerySlide);
-    //         });
-    //     });
-        
-    //     // Auto-advance (optional)
-    //     let galleryInterval = setInterval(() => {
-    //         currentGallerySlide = (currentGallerySlide + 1) % gallerySlides.length;
-    //         showGallerySlide(currentGallerySlide);
-    //     }, 5000);
-        
-    //     document.querySelector('.gallery-container').addEventListener('mouseenter', () => {
-    //         clearInterval(galleryInterval);
-    //     });
-        
-    //     document.querySelector('.gallery-container').addEventListener('mouseleave', () => {
-    //         galleryInterval = setInterval(() => {
-    //             currentGallerySlide = (currentGallerySlide + 1) % gallerySlides.length;
-    //             showGallerySlide(currentGallerySlide);
-    //         }, 5000);
-    //     });
-        
-    //     // Keyboard navigation for gallery
-    //     document.addEventListener('keydown', function(e) {
-    //         if (document.getElementById('roomModal').style.display === 'block') {
-    //             if (e.key === 'ArrowRight') {
-    //                 currentGallerySlide = (currentGallerySlide + 1) % gallerySlides.length;
-    //                 showGallerySlide(currentGallerySlide);
-    //             } else if (e.key === 'ArrowLeft') {
-    //                 currentGallerySlide = (currentGallerySlide - 1 + gallerySlides.length) % gallerySlides.length;
-    //                 showGallerySlide(currentGallerySlide);
-    //             }
-    //         }
-    //     });
-    // });
-    // Function to initialize gallery of room modal when open it.
+
+
+    // Initial calculation
+    //calculateTotal();
+});
+function validateGSTIN() {
+    if (!gstCheckbox.checked) return;
+
+    const gstin = gstInput.value;
+    const isValid = gstin.match(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/);
+
+    if (gstin.length > 0 && !isValid) {
+        gstInput.classList.add('invalid');
+        gstWarning.style.display = 'block';
+    } else {
+        gstInput.classList.remove('invalid');
+        gstWarning.style.display = 'none';
+    }
+}
+
+function calculateTotal() {
+    validateGSTIN();
+    const childrenCount = parseInt(childrenSelect.value);
+    const includeGST = gstCheckbox.checked;
+    const gstinValid = gstInput.value.match(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/);
+
+    // Calculate child charges
+    // Before calculating the child charge checkin and checkout dates has to be filled as this charge will be calculated for total nights(checkout-checkin)
+    //const checkin = document.getElementById('checkin').value;
+    //const checkout = document.getElementById('checkout').value;
+    const checkin = new Date(document.getElementById('modalCheckin').value);
+    const checkout = new Date(document.getElementById('modalCheckout').value);
+
+    let totalNightsToStay = 0;
+    if (!isNaN(checkin.getTime()) && !isNaN(checkout.getTime())) {
+        totalNightsToStay = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
+    }
+
+    // Now calculate childCharges safely
+    const childChargeValue = Number(modalChildCharge.value) || 0;
+    const childCharges = childrenCount * childChargeValue * totalNightsToStay;
+
+    roomChargesLabel.innerHTML = `Room Charge(${modalRoomPrice.value} x ${totalNightsToStay} nights):`;
+    roomChargesAmount.textContent = `₹${(modalRoomPrice.value * (totalNightsToStay))}`;
+    if (childrenCount > 0) {
+        extraChildCharge.style.display = 'flex';
+        extraChildAmount.textContent = `₹${childCharges}`;
+        extraChildChargeLabel.innerHTML = `Extra Child Charge(${childrenCount} x ₹${childChargeValue} x ${totalNightsToStay} nights):`;
+    } else {
+        extraChildCharge.style.display = 'none';
+    }
+
+    // Calculate subtotal
+    let subtotal = (totalNightsToStay > 0) ? (+(modalRoomPrice.value * (totalNightsToStay)) + childCharges) : (Number(modalRoomPrice.value));
+
+    // Calculate GST if applicable
+    if (includeGST && gstinValid) {
+        const gst = subtotal * gstRate;
+        gstCharge.style.display = 'flex';
+        gstAmount.textContent = `₹${gst.toFixed(2)}`;
+        gstChargeLabel.innerHTML = `GST Charge(₹${subtotal} x  12.5%):`;//this line has to be here only otherwise calculation will be incorrect
+        subtotal += gst;
+    } else {
+        gstCharge.style.display = 'none';
+    }
+
+    // Update total
+    totalPrice.textContent = `₹${subtotal.toFixed(2)}`;
+}
+
+// Gallery-specific JavaScript with unique variable names
+// document.addEventListener('DOMContentLoaded', function() {
+//     // Gallery elements
+//     const gallerySlides = document.querySelectorAll('.gallery-slide');
+//     const galleryIndicators = document.querySelectorAll('.gallery-indicator');
+//     const galleryPrev = document.querySelector('.gallery-prev');
+//     const galleryNext = document.querySelector('.gallery-next');
+//     let currentGallerySlide = 0;
+
+//     function showGallerySlide(index) {
+//         gallerySlides.forEach(slide => slide.classList.remove('active'));
+//         galleryIndicators.forEach(indicator => indicator.classList.remove('active'));
+
+//         gallerySlides[index].classList.add('active');
+//         galleryIndicators[index].classList.add('active');
+//     }
+
+//     galleryNext.addEventListener('click', () => {
+//         currentGallerySlide = (currentGallerySlide + 1) % gallerySlides.length;
+//         showGallerySlide(currentGallerySlide);
+//     });
+
+//     galleryPrev.addEventListener('click', () => {
+//         currentGallerySlide = (currentGallerySlide - 1 + gallerySlides.length) % gallerySlides.length;
+//         showGallerySlide(currentGallerySlide);
+//     });
+
+//     galleryIndicators.forEach(indicator => {
+//         indicator.addEventListener('click', () => {
+//             currentGallerySlide = parseInt(indicator.getAttribute('data-index'));
+//             showGallerySlide(currentGallerySlide);
+//         });
+//     });
+
+//     // Auto-advance (optional)
+//     let galleryInterval = setInterval(() => {
+//         currentGallerySlide = (currentGallerySlide + 1) % gallerySlides.length;
+//         showGallerySlide(currentGallerySlide);
+//     }, 5000);
+
+//     document.querySelector('.gallery-container').addEventListener('mouseenter', () => {
+//         clearInterval(galleryInterval);
+//     });
+
+//     document.querySelector('.gallery-container').addEventListener('mouseleave', () => {
+//         galleryInterval = setInterval(() => {
+//             currentGallerySlide = (currentGallerySlide + 1) % gallerySlides.length;
+//             showGallerySlide(currentGallerySlide);
+//         }, 5000);
+//     });
+
+//     // Keyboard navigation for gallery
+//     document.addEventListener('keydown', function(e) {
+//         if (document.getElementById('roomModal').style.display === 'block') {
+//             if (e.key === 'ArrowRight') {
+//                 currentGallerySlide = (currentGallerySlide + 1) % gallerySlides.length;
+//                 showGallerySlide(currentGallerySlide);
+//             } else if (e.key === 'ArrowLeft') {
+//                 currentGallerySlide = (currentGallerySlide - 1 + gallerySlides.length) % gallerySlides.length;
+//                 showGallerySlide(currentGallerySlide);
+//             }
+//         }
+//     });
+// });
+// Function to initialize gallery of room modal when open it.
 function initGallery() {
     const gallerySlides = document.querySelectorAll('.gallery-slide');
     const galleryIndicators = document.querySelectorAll('.gallery-indicator');
@@ -924,7 +963,7 @@ function initGallery() {
     function showGallerySlide(index) {
         gallerySlides.forEach(slide => slide.classList.remove('active'));
         galleryIndicators.forEach(indicator => indicator.classList.remove('active'));
-        
+
         gallerySlides[index].classList.add('active');
         galleryIndicators[index].classList.add('active');
     }
@@ -933,7 +972,7 @@ function initGallery() {
         // Clear existing event listeners to avoid duplicates
         galleryNext.replaceWith(galleryNext.cloneNode(true));
         galleryPrev.replaceWith(galleryPrev.cloneNode(true));
-        
+
         const newNext = document.querySelector('.gallery-next');
         const newPrev = document.querySelector('.gallery-prev');
 
@@ -942,13 +981,13 @@ function initGallery() {
             showGallerySlide(currentGallerySlide);
             resetInterval();
         });
-        
+
         newPrev.addEventListener('click', () => {
             currentGallerySlide = (currentGallerySlide - 1 + gallerySlides.length) % gallerySlides.length;
             showGallerySlide(currentGallerySlide);
             resetInterval();
         });
-        
+
         galleryIndicators.forEach(indicator => {
             indicator.addEventListener('click', () => {
                 currentGallerySlide = parseInt(indicator.getAttribute('data-index'));
@@ -960,12 +999,12 @@ function initGallery() {
 
     function setupAutoAdvance() {
         resetInterval();
-        
+
         const galleryContainer = document.querySelector('.gallery-container');
         galleryContainer.addEventListener('mouseenter', () => {
             clearInterval(galleryInterval);
         });
-        
+
         galleryContainer.addEventListener('mouseleave', () => {
             resetInterval();
         });
@@ -980,7 +1019,7 @@ function initGallery() {
     }
 
     function setupKeyboardNavigation() {
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (document.getElementById('roomModal').style.display === 'block') {
                 if (e.key === 'ArrowRight') {
                     currentGallerySlide = (currentGallerySlide + 1) % gallerySlides.length;
@@ -1005,11 +1044,11 @@ function initGallery() {
 function updateGallery(room) {
     const modalRoomGallery = document.querySelector('.gallery-slider');
     const pagination = document.querySelector('.gallery-pagination');
-    
+
     // Clear existing slides
     modalRoomGallery.innerHTML = "";
     pagination.innerHTML = "";
-    
+
     // Add new slides
     room.images.forEach((imgData, index) => {
         const img = document.createElement("img");
@@ -1017,14 +1056,14 @@ function updateGallery(room) {
         img.alt = imgData.alt;
         img.className = index === 0 ? "gallery-slide active" : "gallery-slide";
         modalRoomGallery.appendChild(img);
-        
+
         // Create new indicators
         const indicator = document.createElement("span");
         indicator.className = index === 0 ? "gallery-indicator active" : "gallery-indicator";
         indicator.setAttribute('data-index', index);
         pagination.appendChild(indicator);
     });
-    
+
     // Reinitialize gallery functionality
     initGallery();
 }
@@ -1032,19 +1071,19 @@ function updateGallery(room) {
 // Usage when opening modal with a specific room:
 // updateGallery(roomData);
 //Modal Booking Form Submission
- // Modal booking form submission
-        modalBookingForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Get form data
-            // Collect all form data
-            const checkin = new Date(document.getElementById('modalCheckin').value);
-            const checkout = new Date(document.getElementById('modalCheckout').value);
+// Modal booking form submission
+modalBookingForm.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-            let totalNightsToStay = 0;
-           if (!isNaN(checkin.getTime()) && !isNaN(checkout.getTime())) {
-             totalNightsToStay = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
-           }
+    // Get form data
+    // Collect all form data
+    const checkin = new Date(document.getElementById('modalCheckin').value);
+    const checkout = new Date(document.getElementById('modalCheckout').value);
+
+    let totalNightsToStay = 0;
+    if (!isNaN(checkin.getTime()) && !isNaN(checkout.getTime())) {
+        totalNightsToStay = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
+    }
     const formData = {
         roomId: document.getElementById('modalRoomId').value,
         roomType: document.getElementById('modalRoomType').value,
@@ -1054,21 +1093,21 @@ function updateGallery(room) {
         address: document.getElementById('modalAddress').value,
         checkin: document.getElementById('modalCheckin').value,
         checkout: document.getElementById('modalCheckout').value,
-        totalNights:totalNightsToStay,
+        totalNights: totalNightsToStay,
         adults: document.getElementById('modalAdults').value,
         children: document.getElementById('modalChildren').value,
         includeGST: document.getElementById('modalIncludeGST').checked,
-        gstin: document.getElementById('modalIncludeGST').checked 
-               ? document.getElementById('modalGSTIN').value 
-               : null,
+        gstin: document.getElementById('modalIncludeGST').checked
+            ? document.getElementById('modalGSTIN').value
+            : null,
         specialRequests: document.getElementById('modalSpecialRequests').value,
-        roomBasePrice:parseFloat(document.getElementById('modalRoomPrice').value),
-        roomCharge: (document.getElementById('modalRoomPrice').value)*(totalNightsToStay), // Your base room price
-        perChildCharge:(document.getElementById('modalChildCharge').value),
-        childCharges: parseInt(document.getElementById('modalChildren').value) * (document.getElementById('modalChildCharge').value)*totalNightsToStay,
+        roomBasePrice: parseFloat(document.getElementById('modalRoomPrice').value),
+        roomCharge: (document.getElementById('modalRoomPrice').value) * (totalNightsToStay), // Your base room price
+        perChildCharge: (document.getElementById('modalChildCharge').value),
+        childCharges: parseInt(document.getElementById('modalChildren').value) * (document.getElementById('modalChildCharge').value) * totalNightsToStay,
         gstAmount: document.getElementById('modalIncludeGST').checked
-                 ? parseFloat(document.getElementById('gstAmount').textContent.replace('₹', ''))
-                 : 0,
+            ? parseFloat(document.getElementById('gstAmount').textContent.replace('₹', ''))
+            : 0,
         totalAmount: parseFloat(document.getElementById('modalTotalPrice').textContent.replace('₹', ''))
     };
 
@@ -1078,30 +1117,30 @@ function updateGallery(room) {
     const loadingTimeout = setTimeout(() => {
         document.getElementById('loadingIcon').style.display = 'flex';
     }, 10); // Show loader after 2 seconds
-    
+
     // Example: Send to Google Apps Script
     //Check room availability
     fetch(`https://royalinnbackend.onrender.com/checkRoomAvailability?checkIn=${formData.checkin}&checkOut=${formData.checkout}&roomType=${formData.roomType}`, {
-    method: 'GET'
-})
-.then(response => response.json())
-.then(data => {
-     clearTimeout(loadingTimeout); // Stop the timer
-     document.getElementById('loadingIcon').style.display = 'none'; // Hide loader if it was shown
-    if (data.success && data.data.available) {
-        // First Show payment message to collect payment via QR code
-        console.log("availability data: "+JSON.stringify(data));
-        showPaymentModal(formData);
-    } else {
-        alert("This Room not available for selected date.");
-    }
-})
-.catch(error => {
-    clearTimeout(loadingTimeout);
-        document.getElementById('loadingIcon').style.display = 'none';
-    console.error('Error:', error);
-    alert('Booking failed. Please try again.');
-});
+        method: 'GET'
+    })
+        .then(response => response.json())
+        .then(data => {
+            clearTimeout(loadingTimeout); // Stop the timer
+            document.getElementById('loadingIcon').style.display = 'none'; // Hide loader if it was shown
+            if (data.success && data.data.available) {
+                // First Show payment message to collect payment via QR code
+                console.log("availability data: " + JSON.stringify(data));
+                showPaymentModal(formData);
+            } else {
+                alert("This Room not available for selected date.");
+            }
+        })
+        .catch(error => {
+            clearTimeout(loadingTimeout);
+            document.getElementById('loadingIcon').style.display = 'none';
+            console.error('Error:', error);
+            alert('Booking failed. Please try again.');
+        });
     /*
     fetch('YOUR_GOOGLE_SCRIPT_URL', {
         method: 'POST',
@@ -1120,28 +1159,28 @@ function updateGallery(room) {
         alert('Booking failed. Please try again.');
     });
     */
-    
+
     // For now just show the collected data
     //alert('Booking successful! Data: ' + JSON.stringify(formData, null, 2));
-    
-            
-            // In a real app, you would send this to your Google Apps Script backend
-            // For now, we'll simulate a successful booking
-            //simulateBooking(formData);
-        });
-        // Set up date validation logic
+
+
+    // In a real app, you would send this to your Google Apps Script backend
+    // For now, we'll simulate a successful booking
+    //simulateBooking(formData);
+});
+// Set up date validation logic
 function setupDateValidation() {
     const checkinInput = document.getElementById('modalCheckin');
     const checkoutInput = document.getElementById('modalCheckout');
-    
+
     // Set initial minimum dates
     setMinDates();
-    
+
     // When check-in date changes
-    checkinInput.addEventListener('change', function() {
+    checkinInput.addEventListener('change', function () {
         const checkinDate = new Date(this.value);
         const checkoutDate = new Date(checkoutInput.value);
-        
+
         // If check-out exists and is before new check-in
         if (checkoutInput.value && checkoutDate <= checkinDate) {
             // Set check-out to day after check-in
@@ -1149,17 +1188,17 @@ function setupDateValidation() {
             nextDay.setDate(nextDay.getDate() + 1);
             checkoutInput.value = nextDay.toISOString().split('T')[0];
         }
-        
+
         // Update check-out min date
         checkoutInput.min = this.value;
         validateDates();
     });
-    
+
     // When check-out date changes
-    checkoutInput.addEventListener('change', function() {
+    checkoutInput.addEventListener('change', function () {
         const checkinDate = new Date(checkinInput.value);
         const checkoutDate = new Date(this.value);
-        
+
         // If check-in exists and is after check-out
         if (checkinInput.value && checkoutDate <= checkinDate) {
             // Set check-in to day before check-out
@@ -1170,31 +1209,31 @@ function setupDateValidation() {
         validateDates();
     });
 }
-function showPaymentModal(bookingData){
-  console.log("showPayment:"+bookingData);
-     const room = rooms.find(r => r.id === parseInt(bookingData.roomId));
-            const checkinDate = new Date(bookingData.checkin).toLocaleDateString();
-            const checkoutDate = new Date(bookingData.checkout).toLocaleDateString();
-            
-            paymentMessage.innerHTML = `
+function showPaymentModal(bookingData) {
+    console.log("showPayment:" + bookingData);
+    const room = rooms.find(r => r.id === parseInt(bookingData.roomId));
+    const checkinDate = new Date(bookingData.checkin).toLocaleDateString();
+    const checkoutDate = new Date(bookingData.checkout).toLocaleDateString();
+
+    paymentMessage.innerHTML = `
                 Send payment screenshot to reserve <strong style="color:#8B5A2B;">${room.title}</strong><br><br>
                 <strong>Amount:</strong>${bookingData.totalAmount}<br>
                 <strong>Check-in:</strong> ${bookingData.checkin}<br>
                 <strong>Check-out:</strong> ${bookingData.checkout}<br>
                 <strong>Guests:</strong> ${bookingData.adults} Adults, ${bookingData.children} Children
             `;
-            
-            closeModal(); // Close the room modal
-            paymentModal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-            proceedPaymentModal.addEventListener('click', (e) => {
-          paymentModal.style.display = 'none';
-          bookRoom(bookingData);
-          //showSuccessModal(bookingData);
-          });
+
+    closeModal(); // Close the room modal
+    paymentModal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    proceedPaymentModal.addEventListener('click', (e) => {
+        paymentModal.style.display = 'none';
+        bookRoom(bookingData);
+        //showSuccessModal(bookingData);
+    });
 }
-function bookRoom(bookingData){
- 
+function bookRoom(bookingData) {
+
     fetch('https://royalinnbackend.onrender.com/bookRoom', {
         method: 'POST',
         body: JSON.stringify(bookingData),
@@ -1202,84 +1241,84 @@ function bookRoom(bookingData){
             'Content-Type': 'application/json'
         }
     })
-    .then(response => response.json())
-    .then(data => {
-        // Show success message
-        if (data.success && (data.data.updates.updatedRows>0)) {
-        // First Show payment message to collect payment via QR code
-        console.log("booking data: "+JSON.stringify(data));
-        showSuccessModal(bookingData);
-    } else {
-        console.log("This Room not booked.");
-    }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Booking failed. Please try again.');
-    });
-    
-    
+        .then(response => response.json())
+        .then(data => {
+            // Show success message
+            if (data.success && (data.data.updates.updatedRows > 0)) {
+                // First Show payment message to collect payment via QR code
+                console.log("booking data: " + JSON.stringify(data));
+                showSuccessModal(bookingData);
+            } else {
+                console.log("This Room not booked.");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Booking failed. Please try again.');
+        });
+
+
 }
-function showSuccessModal(bookingData){
-  console.log("showSuccessModal:"+bookingData);
-  const room = rooms.find(r => r.id === parseInt(bookingData.roomId));
-            const checkinDate = new Date(bookingData.checkin).toLocaleDateString();
-            const checkoutDate = new Date(bookingData.checkout).toLocaleDateString();
-            successMessageGreen.innerHTML = `Your reservation for the <strong style="color:#8B5A2B;">${room.title}</strong> has been confirmed.<br><br>`
-            successMessage.innerHTML = `
+function showSuccessModal(bookingData) {
+    console.log("showSuccessModal:" + bookingData);
+    const room = rooms.find(r => r.id === parseInt(bookingData.roomId));
+    const checkinDate = new Date(bookingData.checkin).toLocaleDateString();
+    const checkoutDate = new Date(bookingData.checkout).toLocaleDateString();
+    successMessageGreen.innerHTML = `Your reservation for the <strong style="color:#8B5A2B;">${room.title}</strong> has been confirmed.<br><br>`
+    successMessage.innerHTML = `
                 <strong>Check-in:</strong> ${bookingData.checkin}<br>
                 <strong>Check-out:</strong> ${bookingData.checkout}<br>
                 <strong>Guests:</strong> ${bookingData.adults} Adults, ${bookingData.children} Children
             `;
-            closeModal(); // Close the room modal
-            successModal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
+    closeModal(); // Close the room modal
+    successModal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
 
 }
 // Simple Slider Functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        const slides = document.querySelectorAll('.banquet-slide');
-        const dots = document.querySelectorAll('.banquet-dot');
-        let currentSlide = 0;
-        let slideInterval;
-        
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            dots.forEach(dot => dot.classList.remove('active'));
-            
-            slides[index].classList.add('active');
-            dots[index].classList.add('active');
-            currentSlide = index;
-        }
-        
-        function nextSlide() {
-            const newIndex = (currentSlide + 1) % slides.length;
-            showSlide(newIndex);
-        }
-        
-        // Auto-advance slides
-        function startSlider() {
-            slideInterval = setInterval(nextSlide, 5000);
-        }
-        
-        // Click on dots
-        dots.forEach(dot => {
-            dot.addEventListener('click', function() {
-                const slideIndex = parseInt(this.getAttribute('data-slide'));
-                showSlide(slideIndex);
-                clearInterval(slideInterval);
-                startSlider();
-            });
+document.addEventListener('DOMContentLoaded', function () {
+    const slides = document.querySelectorAll('.banquet-slide');
+    const dots = document.querySelectorAll('.banquet-dot');
+    let currentSlide = 0;
+    let slideInterval;
+
+    function showSlide(index) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+        currentSlide = index;
+    }
+
+    function nextSlide() {
+        const newIndex = (currentSlide + 1) % slides.length;
+        showSlide(newIndex);
+    }
+
+    // Auto-advance slides
+    function startSlider() {
+        slideInterval = setInterval(nextSlide, 5000);
+    }
+
+    // Click on dots
+    dots.forEach(dot => {
+        dot.addEventListener('click', function () {
+            const slideIndex = parseInt(this.getAttribute('data-slide'));
+            showSlide(slideIndex);
+            clearInterval(slideInterval);
+            startSlider();
         });
-        
-        // Start the slider
-        startSlider();
-        
-        // Pause on hover
-        const sliderContainer = document.querySelector('.banquet-slider-container');
-        sliderContainer.addEventListener('mouseenter', () => clearInterval(slideInterval));
-        sliderContainer.addEventListener('mouseleave', startSlider);
     });
+
+    // Start the slider
+    startSlider();
+
+    // Pause on hover
+    const sliderContainer = document.querySelector('.banquet-slider-container');
+    sliderContainer.addEventListener('mouseenter', () => clearInterval(slideInterval));
+    sliderContainer.addEventListener('mouseleave', startSlider);
+});
 
 //     const checkinInput = document.getElementById('modalCheckin');
 // const checkoutInput = document.getElementById('modalCheckout');
@@ -1290,7 +1329,7 @@ function showSuccessModal(bookingData){
 function validateDates() {
     const checkinDate = checkinInput.value;
     const checkoutDate = checkoutInput.value;
-    
+
     if (checkinDate && checkoutDate) {
         childrenSelect.disabled = false;
         gstCheckbox.disabled = false;
@@ -1311,8 +1350,8 @@ function validateDates() {
     }
 }
 
-  //Make first api call to the backend so that inactive instance will become active so the next onwards api calls will be served quickly.
-            firstAPICallToBackend();
+//Make first api call to the backend so that inactive instance will become active so the next onwards api calls will be served quickly.
+firstAPICallToBackend();
 
 
 
@@ -1320,4 +1359,162 @@ function validateDates() {
 // Re-validate when either date changes
 //checkinInput.addEventListener('change', validateDates);
 //checkoutInput.addEventListener('change', validateDates);
-   
+//Function to get discount banner data
+function getDiscount() {
+
+    fetch(`http://localhost:3000/getDiscount`, {
+        method: 'GET'
+    })
+        .then(res => res.json())
+        .then(data => {
+            // Validate and update config
+            config.isDiscountActive = data.isDiscountActive ?? false;
+            config.discountPercent = data.discountPercent ?? 0;
+            config.offerStartDate = data.offerStartDate ?? "";
+            config.offerEndDate = data.offerEndDate ?? "";
+            config.freeBreakfast = data.freeBreakfast ?? false;
+            config.freeLunch = data.freeLunch ?? false;
+            config.noChildCharge = data.noChildCharge ?? false;
+
+            // Keep generating icons every 100ms
+            // This goes wherever you start the floating icons
+            var floatingIconInterval = '';
+            if (config.isDiscountActive) {
+                showDiscountPopup(config.discountPercent, config.offerStartDate, config.offerEndDate);
+                var timerInterval = setInterval(updatePopupTimer(config.offerStartDate, config.offerEndDate), 1000);
+                // Keep generating icons every 100ms
+                // This goes wherever you start the floating icons
+                floatingIconInterval = setInterval(createFloatingIcon, 100);
+                loadRooms();
+            }
+
+        })
+        .catch(error => {
+            console.error('Error: Reading discount', error);
+
+        });
+}
+//const isDiscountActive = true;
+//const discountPercent = 20;
+//const discountDurationMinutes = 10;
+
+// // --- Timer Logic ---
+// let endTime = new Date("2025-07-30T23:59:59");
+// endTime.setMinutes(endTime.getMinutes() + discountDurationMinutes);
+
+
+
+// --- Timer Logic ---
+function getRemainingTime(offerStartDate, offerEndDate) {
+    const now = new Date();
+
+    if (now < offerStartDate) {
+        // Show countdown to the offer start time if needed
+        return { status: 'upcoming', time: getTimeDiff(offerStartDate - now) };
+    }
+
+    if (now > offerEndDate) {
+        return { status: 'expired' };
+    }
+
+    return { status: 'active', time: getTimeDiff(offerEndDate - now) };
+}
+
+function getTimeDiff(ms) {
+    const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((ms % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((ms % (1000 * 60)) / 1000);
+
+    return `${String(days).padStart(2, '0')}d ${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
+}
+
+function updatePopupTimer(start, end) {
+    const offerStartDate = new Date(start); // Start from 21 July 2025
+    const offerEndDate = new Date(end);   // End on 30 July 2025
+    const timerElement = document.getElementById('discount-timer');
+    const popupElement = document.getElementById('discount-popup');
+    if (!timerElement || !popupElement) return;
+
+    const result = getRemainingTime(offerStartDate, offerEndDate);
+
+    if (result.status === 'expired') {
+        popupElement.remove();
+        clearInterval(timerInterval);
+    } else if (result.status === 'upcoming') {
+        timerElement.textContent = `🎯 Offer starts in: ${result.time}`;
+    } else {
+        timerElement.textContent = `⏳ Ends in: ${result.time}`;
+    }
+}
+
+// --- Show Popup ---
+function showDiscountPopup(discountPercent, offerStartDate, offerEndDate) {
+    const popup = document.createElement("div");
+    popup.id = "discount-popup";
+    popup.innerHTML = `
+    <span id="close-popup">&times;</span>
+    <i class="fas fa-tag"></i>
+    <p>
+        🎉 Limited Time Offer!<br>
+        <strong>${discountPercent}% OFF</strong> on all room bookings!
+    </p>
+    <span id="discount-timer">⏳ Ends in: --:--</span>
+`;
+    document.body.appendChild(popup);
+    updatePopupTimer(offerStartDate, offerEndDate);
+
+
+    //
+    document.getElementById("close-popup").onclick = () => {
+        popup.remove();
+        clearInterval(timerInterval);
+        // Stop floating icons
+        clearInterval(floatingIconInterval);
+
+        //Optionally remove existing floating icons
+        const iconContainer = document.getElementById("offer-icons-container");
+        if (iconContainer) {
+            iconContainer.innerHTML = ''; // Clears all icon elements
+        }
+    };
+}
+
+
+const icons = ["🎁", "🏷️", "💸", "🎉", "🔥", "⭐", "✨", "% OFF"];
+const container = document.getElementById("offer-icons-container");
+
+function createFloatingIcon() {
+    const icon = document.createElement("div");
+    icon.classList.add("offer-icon");
+
+    const selected = icons[Math.floor(Math.random() * icons.length)];
+
+    // If the selected icon is "% OFF", prepend config.discountPercent
+    if (selected === "% OFF") {
+        icon.textContent = `${config.discountPercent} % OFF`;
+        icon.style.fontSize = `${18 + Math.random() * 12}px`;
+        icon.style.fontWeight = 'bold';
+        icon.style.color = '#fff';
+        icon.style.background = 'rgba(255,0,0,0.7)';
+        icon.style.padding = '4px 10px';
+    } else {
+        icon.textContent = selected;
+        icon.style.fontSize = `${18 + Math.random() * 30}px`;
+        icon.style.fontWeight = 'normal';
+        icon.style.color = '';
+        icon.style.background = '';
+        icon.style.padding = '';
+    }
+
+    icon.style.left = `${Math.random() * 100}vw`;
+    icon.style.borderRadius = '8px';
+    icon.style.animationDuration = `${2.5 + Math.random() * 2.5}s`;
+    icon.style.opacity = `${0.7 + Math.random() * 0.3}`;
+    container.appendChild(icon);
+
+    // Remove after animation ends
+    setTimeout(() => icon.remove(), 7000);
+}
+
+
