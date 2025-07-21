@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Royal Inn Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a1a2a;
+            color: #fff;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .box {
+            background: #112039;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #f9c74f;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="number"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: none;
+            font-size: 1rem;
+            background: #27415e;
+            color: #fff;
+        }
+
+        /* Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            float: right;
+            margin-top: -26px;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #f9c74f;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(26px);
+        }
+
+        button {
+            margin-top: 25px;
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            background: #f9c74f;
+            color: #112039;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .toggle-row {
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        /* update discount success */
+        #update-message {
+            margin-top: 10px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #update-message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        #update-message.success::before {
+            content: "✔️";
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box" id="loginBox">
+        <h2><i class="fas fa-lock"></i> Admin Login</h2>
+        <label>Username</label>
+        <input type="text" id="username" placeholder="Enter username" />
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter password" />
+        <button onclick="validateLogin()">Login</button>
+    </div>
+    <div class="box hidden" id="adminPanel">
+        <h2><i class="fas fa-gift"></i> Discount Settings</h2>
+
+        <div class="toggle-row">
+            <label>Enable Discount Banner</label>
+            <label class="switch">
+                <input type="checkbox" id="isActive" onchange="toggleFormState()">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <label>Discount (%)</label>
+        <input type="number" id="discountPercent" min="1" max="99" placeholder="e.g., 20" />
+
+        <label>Offer Start Date</label>
+        <input type="date" id="startDate" />
+
+        <label>Offer End Date</label>
+        <input type="date" id="endDate" />
+
+        <div class="toggle-row">
+            <label>Free Breakfast</label>
+            <label class="switch">
+                <input type="checkbox" id="freeBreakfast">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="toggle-row">
+            <label>Free Lunch</label>
+            <label class="switch">
+                <input type="checkbox" id="freeLunch">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="toggle-row">
+            <label>No Child Charge (up to 5 yrs)</label>
+            <label class="switch">
+                <input type="checkbox" id="noChildCharge">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <button id="updateBtn" onclick="updateDiscount()" disabled>UPDATE</button>
+        <div id="update-message" style="display: none;"></div>
+
+    </div>
+
+    <script>
+        const ADMIN_USERNAME = "admin";
+        const ADMIN_PASSWORD = "royal123";
+
+        function validateLogin() {
+
+            const formData = {
+                username: document.getElementById("username").value,
+                password: document.getElementById("password").value
+            };
+
+
+            fetch('https://royalinnbackend.onrender.com/validateAdminLogin', {
+                method: 'POST',
+                body: JSON.stringify(formData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById("loginBox").classList.add("hidden");
+                        document.getElementById("adminPanel").classList.remove("hidden");
+                    } else {
+                        alert("Invalid credentials.");
+                    }
+
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Admin Login validation failed. Please try again.');
+                });
+
+        }
+
+        function toggleFormState() {
+            const isActive = document.getElementById("isActive").checked;
+            document.getElementById("updateBtn").disabled = !isActive;
+        }
+
+        function updateDiscount() {
+            const settings = {
+                isDiscountActive: document.getElementById("isActive").checked,
+                discountPercent: parseInt(document.getElementById("discountPercent").value, 10),
+                offerStartDate: document.getElementById("startDate").value,
+                offerEndDate: document.getElementById("endDate").value,
+                freeBreakfast: document.getElementById("freeBreakfast").checked,
+                freeLunch: document.getElementById("freeLunch").checked,
+                noChildCharge: document.getElementById("noChildCharge").checked
+            };
+
+            if (settings.isDiscountActive && (!settings.discountPercent || !settings.offerStartDate || !settings.offerEndDate)) {
+                alert("Please fill all fields for active discount.");
+                return;
+            }
+
+            // Save to backend 
+            fetch('https://royalinnbackend.onrender.com/updateDiscount', {
+                method: 'POST',
+                body: JSON.stringify(settings),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById("update-message").textContent = "Discount updated successfully!";
+                        document.getElementById("update-message").className = "success";
+                        document.getElementById("update-message").style.display = "flex";
+                    } else {
+                        alert("Failed to update discount.");
+                    }
+
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to update discount. Please try again.');
+                });
+
+        }
+
+        //logic to set start and end date as today and next 
+        document.addEventListener('DOMContentLoaded', () => {
+            const startDateInput = document.getElementById('startDate');
+            const endDateInput = document.getElementById('endDate');
+
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const todayStr = `${yyyy}-${mm}-${dd}`;
+
+            // Set start date to today only
+            startDateInput.value = todayStr;
+            startDateInput.min = todayStr;
+            startDateInput.max = todayStr;
+
+            // Set end date to tomorrow
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const yyyyT = tomorrow.getFullYear();
+            const mmT = String(tomorrow.getMonth() + 1).padStart(2, '0');
+            const ddT = String(tomorrow.getDate()).padStart(2, '0');
+            const tomorrowStr = `${yyyyT}-${mmT}-${ddT}`;
+
+            endDateInput.value = tomorrowStr;
+            endDateInput.min = tomorrowStr;
+
+            // If startDate is changed (not really possible due to max=today), reset endDate to next day
+            startDateInput.addEventListener('change', () => {
+                const selectedStart = new Date(startDateInput.value);
+                selectedStart.setDate(selectedStart.getDate() + 1);
+                const yyyyS = selectedStart.getFullYear();
+                const mmS = String(selectedStart.getMonth() + 1).padStart(2, '0');
+                const ddS = String(selectedStart.getDate()).padStart(2, '0');
+                const nextDayStr = `${yyyyS}-${mmS}-${ddS}`;
+                endDateInput.value = nextDayStr;
+                endDateInput.min = nextDayStr;
+            });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,12 +1,12 @@
 //banner config
 var config = {
-    isDiscountActive: true,
+    isDiscountActive: false,
     discountPercent: 25,
-    offerStartDate: "2025-07-21T00:00:00",
-    offerEndDate: "2025-07-30T23:59:59",
-    freeBreakfast: true,
-    freeLunch: true,
-    noChildCharge: true
+    offerStartDate: "",
+    offerEndDate: "",
+    freeBreakfast: false,
+    freeLunch: false,
+    noChildCharge: false
 };
 window.addEventListener('DOMContentLoaded', getDiscount);
 
@@ -1362,7 +1362,7 @@ firstAPICallToBackend();
 //Function to get discount banner data
 function getDiscount() {
 
-    fetch(`http://localhost:3000/getDiscount`, {
+    fetch(`https://royalinnbackend.onrender.com/getDiscount`, {
         method: 'GET'
     })
         .then(res => res.json())
