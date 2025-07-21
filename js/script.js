@@ -99,6 +99,8 @@ function init() {
     loadRooms();
     setMinDates();
     initHeroSlider();
+    //Make first api call to the backend so that inactive instance will become active so the next onwards api calls will be served quickly.
+    firstAPICallToBackend();
 }
 // Sample room data - in a real app, this would come from your backend
 var globalRoomPrice = 0; // Base room price
@@ -1350,8 +1352,7 @@ function validateDates() {
     }
 }
 
-//Make first api call to the backend so that inactive instance will become active so the next onwards api calls will be served quickly.
-firstAPICallToBackend();
+
 
 
 
@@ -1431,7 +1432,7 @@ function getTimeDiff(ms) {
 
 function updatePopupTimer(start, end) {
     const offerStartDate = new Date(start); // Start from 21 July 2025
-    const offerEndDate = new Date(end);   // End on 30 July 2025
+    const offerEndDate = new Date(end + "T23:59:59");   // Ends on the last day/end date before the next day starts
     const timerElement = document.getElementById('discount-timer');
     const popupElement = document.getElementById('discount-popup');
     if (!timerElement || !popupElement) return;
