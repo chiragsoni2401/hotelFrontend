@@ -755,7 +755,7 @@ function setMinDates() {
 document.addEventListener('DOMContentLoaded', init);
 
 //Script for new modalroombookingform
-const gstRate = 0.125; // 12.5% GST
+const gstRate = 0.12; // 12% GST
 
 
 // Add this JavaScript to handle the dynamic pricing
@@ -777,7 +777,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-    // const gstRate = 0.125; // 12.5% GST
+    // const gstRate = 0.12; // 12% GST
 
     // const childrenSelect = document.getElementById('modalChildren');
     // const gstCheckbox = document.getElementById('modalIncludeGST');
@@ -879,7 +879,7 @@ function calculateTotal() {
         const gst = subtotal * gstRate;
         gstCharge.style.display = 'flex';
         gstAmount.textContent = `₹${gst.toFixed(2)}`;
-        gstChargeLabel.innerHTML = `GST Charge(₹${subtotal} x  12.5%):`;//this line has to be here only otherwise calculation will be incorrect
+        gstChargeLabel.innerHTML = `GST Charge(₹${subtotal} x  12%):`;//this line has to be here only otherwise calculation will be incorrect
         subtotal += gst;
     } else {
         gstCharge.style.display = 'none';
@@ -1431,7 +1431,7 @@ function getTimeDiff(ms) {
 }
 
 function updatePopupTimer(start, end) {
-    const offerStartDate = new Date(start+ "T00:00:00"); // Start from 21 July 2025
+    const offerStartDate = new Date(start + "T00:00:00"); // Start from 21 July 2025
     const offerEndDate = new Date(end + "T23:59:59");   // Ends on the last day/end date before the next day starts
     const timerElement = document.getElementById('discount-timer');
     const popupElement = document.getElementById('discount-popup');
