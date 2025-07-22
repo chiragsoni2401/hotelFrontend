@@ -1369,13 +1369,13 @@ function getDiscount() {
         .then(res => res.json())
         .then(data => {
             // Validate and update config
-            config.isDiscountActive = data.isDiscountActive ?? false;
-            config.discountPercent = data.discountPercent ?? 0;
-            config.offerStartDate = data.offerStartDate ?? "";
-            config.offerEndDate = data.offerEndDate ?? "";
-            config.freeBreakfast = data.freeBreakfast ?? false;
-            config.freeLunch = data.freeLunch ?? false;
-            config.noChildCharge = data.noChildCharge ?? false;
+            config.isDiscountActive = data.data.isDiscountActive ?? false;
+            config.discountPercent = data.data.discountPercent ?? 0;
+            config.offerStartDate = data.data.offerStartDate ?? "";
+            config.offerEndDate = data.data.offerEndDate ?? "";
+            config.freeBreakfast = data.data.freeBreakfast ?? false;
+            config.freeLunch = data.data.freeLunch ?? false;
+            config.noChildCharge = data.data.noChildCharge ?? false;
 
             // Keep generating icons every 100ms
             // This goes wherever you start the floating icons
