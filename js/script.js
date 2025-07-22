@@ -1373,9 +1373,9 @@ function getDiscount() {
             config.discountPercent = data.data.discountPercent ?? 0;
             config.offerStartDate = data.data.offerStartDate ?? "";
             config.offerEndDate = data.data.offerEndDate ?? "";
-            config.freeBreakfast = data.data.freeBreakfast ?? false;
-            config.freeLunch = data.data.freeLunch ?? false;
-            config.noChildCharge = data.data.noChildCharge ?? false;
+            config.freeBreakfast = data.data.freeBreakfast.toLowerCase() === "true" ?? false;
+            config.freeLunch = data.data.freeLunch.toLowerCase() === "true" ?? false;
+            config.noChildCharge = data.data.noChildCharge.toLowerCase() === "true" ?? false;
 
             // Keep generating icons every 100ms
             // This goes wherever you start the floating icons
