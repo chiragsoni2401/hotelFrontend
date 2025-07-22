@@ -592,7 +592,22 @@ function openRoomModal(roomId) {
     // Set Room Images dynamically for selected room
     updateGallery(room);
     // modalRoomGallery.innerHTML = "";
-
+    // Create flags dynamically
+    let featureFlags = '';
+    if (config.freeBreakfast) {
+        featureFlags += `<div class="room-flag">Free Breakfast</div>`;
+    }
+    if (config.freeLunch) {
+        featureFlags += `<div class="room-flag">Free Lunch</div>`;
+    }
+    if (config.noChildCharge) {
+        featureFlags += `<div class="room-flag">No Child Charge Upto 5 Yrs</div>`;
+    }
+    document.getElementById("discountOffer").innerHTML = `
+        ${config.isDiscountActive ? `<div class="discount-flag">${config.discountPercent}% OFF</div>` : ''}
+        <div class="room-flags">
+      ${featureFlags}
+    </div>`;
     // room.images.forEach((imgData, index) => {
     // const img = document.createElement("img");
     // img.src = imgData.src;
