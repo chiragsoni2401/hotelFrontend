@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <title>Royal Inn Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         body {
@@ -148,11 +150,47 @@
             content: "✔️";
             font-size: 16px;
         }
+
+        /* css styles for loading div */
+        .spinner-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 6px solid #ddd;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
 <body>
-
+    <!--Loading icon if backend apis take more time to respond-->
+    <div id="loadingIcon" class="spinner-overlay" style="display: none;">
+        <div class="spinner">Loading....</div>
+    </div>
     <div class="box" id="loginBox">
         <h2><i class="fas fa-lock"></i> Admin Login</h2>
         <label>Username</label>
@@ -220,7 +258,9 @@
                 username: document.getElementById("username").value,
                 password: document.getElementById("password").value
             };
-
+            const loadingTimeout = setTimeout(() => {
+                document.getElementById('loadingIcon').style.display = 'flex';
+            }, 10);
 
             fetch('https://royalinnbackend.onrender.com/validateAdminLogin', {
                 method: 'POST',
@@ -231,6 +271,8 @@
             })
                 .then(response => response.json())
                 .then(data => {
+                    clearTimeout(loadingTimeout); // Stop the timer
+                    document.getElementById('loadingIcon').style.display = 'none'; // Hide loader if it was shown
                     if (data.success) {
                         document.getElementById("loginBox").classList.add("hidden");
                         document.getElementById("adminPanel").classList.remove("hidden");
@@ -241,6 +283,8 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
+                    clearTimeout(loadingTimeout);
+                    document.getElementById('loadingIcon').style.display = 'none';
                     alert('Admin Login validation failed. Please try again.');
                 });
 
