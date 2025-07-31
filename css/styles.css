@@ -1626,3 +1626,62 @@ select:disabled {
     white-space: nowrap;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
+
+
+/* Css for discount check Container - top center */
+#floatingLoader {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Loader Box Styling */
+.top-loader-box {
+  background: rgba(0, 0, 0, 0.85);
+  padding: 15px 25px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+  min-width: 260px;
+  text-align: center;
+}
+
+/* Loader Bar */
+.top-loader-bar {
+  width: 100%;
+  height: 10px;
+  background: #444;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+/* Animated Progress */
+.top-bar-progress {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(to right, #ffcc00, #ff8800);
+  animation: topFillBar 3s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+@keyframes topFillBar {
+  0% { width: 0%; }
+  50% { width: 100%; }
+  100% { width: 0%; }
+}
+
+/* Text Style */
+.top-loader-text {
+  color: #fff;
+  font-size: 1rem;
+  animation: topPulse 1.5s infinite;
+}
+
+@keyframes topPulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
