@@ -457,7 +457,7 @@ function loadRooms() {
         <img src="${room.image}" alt="${room.title}">
         ${config.isDiscountActive ? `<div class="discount-flag">${config.discountPercent}% OFF</div>` : ''}
         <div class="room-flags">
-      ${featureFlags}
+      ${config.isDiscountActive ? featureFlags: ''}
     </div>
     </div>
     <div class="room-details">
@@ -606,7 +606,7 @@ function openRoomModal(roomId) {
     document.getElementById("discountOffer").innerHTML = `
         ${config.isDiscountActive ? `<div class="discount-flag">${config.discountPercent}% OFF</div>` : ''}
         <div class="room-flags">
-      ${featureFlags}
+      ${config.isDiscountActive ? featureFlags: ''}
     </div>`;
     // room.images.forEach((imgData, index) => {
     // const img = document.createElement("img");
