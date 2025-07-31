@@ -1377,12 +1377,14 @@ function validateDates() {
 //checkoutInput.addEventListener('change', validateDates);
 //Function to get discount banner data
 function getDiscount() {
-
+//Show progress bar 
+    document.getElementById('floatingLoader').style.display = 'flex';
     fetch(`https://royalinnbackend.onrender.com/getDiscount`, {
         method: 'GET'
     })
         .then(res => res.json())
         .then(data => {
+            document.getElementById('floatingLoader').style.display = 'none' ;
             // Validate and update config
             config.isDiscountActive = data.data.isDiscountActive ?? false;
             config.discountPercent = data.data.discountPercent ?? 0;
@@ -1391,7 +1393,12 @@ function getDiscount() {
             config.freeBreakfast = data.data.freeBreakfast.toLowerCase() === "true" ?? false;
             config.freeLunch = data.data.freeLunch.toLowerCase() === "true" ?? false;
             config.noChildCharge = data.data.noChildCharge.toLowerCase() === "true" ?? false;
+            // check if offer exists 
+            var todayDate = new Date();
+            if(todayDate > new Date(`${config.offerEndDate}T23:59:59`)){
+                config.isDiscountActive = false;
 
+            }
             // Keep generating icons every 100ms
             // This goes wherever you start the floating icons
             var floatingIconInterval = '';
@@ -1406,6 +1413,7 @@ function getDiscount() {
 
         })
         .catch(error => {
+            document.getElementById('floatingLoader').style.display = 'none' ;
             console.error('Error: Reading discount', error);
 
         });
