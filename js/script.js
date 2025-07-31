@@ -1379,12 +1379,30 @@ function validateDates() {
 function getDiscount() {
 //Show progress bar 
     document.getElementById('floatingLoader').style.display = 'flex';
+    const countdownEl = document.getElementById('loaderCountdown');
+  let remainingTime = 35; // seconds
+  let countdownInterval;
+
+  // 
+  countdownEl.textContent = `${remainingTime}s`;
+
+  // Start countdown
+  countdownInterval = setInterval(() => {
+    remainingTime--;
+    countdownEl.textContent = `${remainingTime}s`;
+
+    if (remainingTime <= 0) {
+      clearInterval(countdownInterval);
+    }
+  }, 1000);
+
     fetch(`https://royalinnbackend.onrender.com/getDiscount`, {
         method: 'GET'
     })
         .then(res => res.json())
         .then(data => {
             document.getElementById('floatingLoader').style.display = 'none' ;
+            clearInterval(countdownInterval);
             // Validate and update config
             config.isDiscountActive = data.data.isDiscountActive ?? false;
             config.discountPercent = data.data.discountPercent ?? 0;
@@ -1414,6 +1432,7 @@ function getDiscount() {
         })
         .catch(error => {
             document.getElementById('floatingLoader').style.display = 'none' ;
+            clearInterval(countdownInterval);
             console.error('Error: Reading discount', error);
 
         });
