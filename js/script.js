@@ -471,8 +471,9 @@ function loadRooms() {
                 ₹${discountedPrice} <span>/ night</span>
                 ${config.isDiscountActive ? `<span class="original-price">₹${originalPrice}</span>` : ''}
             </span>
-            <a href="#" class="view-btn" data-room="${room.id}">View Details</a>
+            <a href="#" class="view-btn disabled" data-room="${room.id}">View Details</a>
         </div>
+        <span style= "color:green"> All rooms are booked</span>
     </div>
 `;
 
