@@ -1685,10 +1685,4 @@ select:disabled {
   50% { opacity: 1; }
   100% { opacity: 0.5; }
 }
-a.disabled {
-  pointer-events: none;  /* Prevent clicking */
-  color: gray;           /* Change text color */
-  text-decoration: none; /* Remove underline */
-  opacity: 0.6;          /* Faded look */
-  cursor: not-allowed;   /* Show disabled cursor */
-}
+
