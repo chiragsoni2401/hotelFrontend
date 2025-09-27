@@ -183,6 +183,19 @@
                 transform: rotate(360deg);
             }
         }
+
+        .status-label {
+            font-size: 0.8rem;
+            margin-left: 360px;
+            font-weight: bold;
+            color: #28a745;
+            vertical-align: middle;
+        }
+
+        .status-label.blocked {
+            color: #dc3545;
+            /* red for blocked */
+        }
     </style>
 </head>
 
@@ -246,6 +259,87 @@
         <button id="updateBtn" onclick="updateDiscount()" disabled>UPDATE</button>
         <div id="update-message" style="display: none;"></div>
 
+        <!-- Room Status code ... -->
+
+        <h2><i class="fas fa-bed"></i> Room Status</h2>
+
+        <div class="toggle-row">
+            <label>Deluxe</label>
+            <label class="switch">
+                <input type="checkbox" id="deluxeStatus" onchange="toggleRoomLabel('deluxeStatus','deluxeLabel')">
+                <span class="slider"></span>
+            </label>
+            <span id="deluxeLabel" class="status-label blocked">blocked</span>
+        </div>
+
+        <div class="toggle-row">
+            <label>Super Deluxe</label>
+            <label class="switch">
+                <input type="checkbox" id="superdeluxeStatus"
+                    onchange="toggleRoomLabel('superdeluxeStatus','superdeluxeLabel')">
+                <span class="slider"></span>
+            </label>
+            <span id="superdeluxeLabel" class="status-label blocked">blocked</span>
+        </div>
+
+        <div class="toggle-row">
+            <label>Executive Suite</label>
+            <label class="switch">
+                <input type="checkbox" id="esuiteStatus" onchange="toggleRoomLabel('esuiteStatus','esuiteLabel')">
+                <span class="slider"></span>
+            </label>
+            <span id="esuiteLabel" class="status-label blocked">blocked</span>
+        </div>
+
+        <div class="toggle-row">
+            <label>Presidential Suite</label>
+            <label class="switch">
+                <input type="checkbox" id="psuiteStatus" onchange="toggleRoomLabel('psuiteStatus','psuiteLabel')">
+                <span class="slider"></span>
+            </label>
+            <span id="psuiteLabel" class="status-label blocked">blocked</span>
+        </div>
+
+        <div class="toggle-row">
+            <label>Royal Suite</label>
+            <label class="switch">
+                <input type="checkbox" id="rsuiteStatus" onchange="toggleRoomLabel('rsuiteStatus','rsuiteLabel')">
+                <span class="slider"></span>
+            </label>
+            <span id="rsuiteLabel" class="status-label blocked">blocked</span>
+        </div>
+
+        <div class="toggle-row">
+            <label>Family (4)</label>
+            <label class="switch">
+                <input type="checkbox" id="family4Status" onchange="toggleRoomLabel('family4Status','family4Label')">
+                <span class="slider"></span>
+            </label>
+            <span id="family4Label" class="status-label blocked">blocked</span>
+        </div>
+
+        <div class="toggle-row">
+            <label>Family (5)</label>
+            <label class="switch">
+                <input type="checkbox" id="family5Status" onchange="toggleRoomLabel('family5Status','family5Label')">
+                <span class="slider"></span>
+            </label>
+            <span id="family5Label" class="status-label blocked">blocked</span>
+
+        </div>
+
+        <div class="toggle-row">
+            <label>Family (7)</label>
+            <label class="switch">
+                <input type="checkbox" id="family7Status" onchange="toggleRoomLabel('family7Status','family7Label')">
+                <span class="slider"></span>
+            </label>
+            <span id="family7Label" class="status-label blocked">blocked</span>
+
+        </div>
+
+        <button onclick="updateRoomStatus()">UPDATE ROOM STATUS</button>
+    </div>
     </div>
 
     <script>
@@ -276,6 +370,7 @@
                     if (data.success) {
                         document.getElementById("loginBox").classList.add("hidden");
                         document.getElementById("adminPanel").classList.remove("hidden");
+                        getRoomBlockStatus();
                     } else {
                         alert("Invalid credentials.");
                     }
@@ -288,6 +383,40 @@
                     alert('Admin Login validation failed. Please try again.');
                 });
 
+        }
+        function getRoomBlockStatus() {
+            fetch(`https://royalinnbackend.onrender.com/getRoomBlockStatus`, {
+                method: 'GET'
+            })
+                .then(res => res.json())
+                .then(data => {
+                    // Default to "available" if not found
+                    const status = {
+                        deluxe: data.data.deluxe ?? "available",
+                        superdeluxe: data.data.superdeluxe ?? "available",
+                        psuite: data.data.psuite ?? "available",
+                        esuite: data.data.esuite ?? "available",
+                        rsuite: data.data.rsuite ?? "available",
+                        family4: data.data.family4 ?? "available",
+                        family5: data.data.family5 ?? "available",
+                        family7: data.data.family7 ?? "available"
+                    };
+
+                    // Loop over keys and update switches + labels
+                    Object.entries(status).forEach(([roomType, value]) => {
+                        const checkbox = document.getElementById(roomType + "Status");
+                        const label = document.getElementById(roomType + "Label");
+
+                        if (checkbox && label) {
+                            checkbox.checked = (value === "available");
+                            toggleRoomLabel(roomType + "Status", roomType + "Label"); // update label color/text
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.error("Error fetching room block status:", err);
+                    alert("Failed to fetch room status from backend.");
+                });
         }
 
         function toggleFormState() {
@@ -376,6 +505,54 @@
                 endDateInput.min = nextDayStr;
             });
         });
+        function updateRoomStatus() {
+            const roomStatus = {
+                deluxe: document.getElementById("deluxeStatus").checked ? "available" : "blocked",
+                superdeluxe: document.getElementById("superdeluxeStatus").checked ? "available" : "blocked",
+                esuite: document.getElementById("esuiteStatus").checked ? "available" : "blocked",
+                psuite: document.getElementById("psuiteStatus").checked ? "available" : "blocked",
+                rsuite: document.getElementById("rsuiteStatus").checked ? "available" : "blocked",
+                family4: document.getElementById("family4Status").checked ? "available" : "blocked",
+                family5: document.getElementById("family5Status").checked ? "available" : "blocked",
+                family7: document.getElementById("family7Status").checked ? "available" : "blocked"
+            };
+
+            console.log("Room Status Data:", roomStatus);
+
+            // Send to backend
+            fetch('https://royalinnbackend.onrender.com/updateRoomBlockStatus', {
+                method: 'POST',
+                body: JSON.stringify(roomStatus),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Room status updated successfully!");
+                    } else {
+                        alert("Failed to update room status.");
+                    }
+                })
+                .catch(err => {
+                    console.error("Error:", err);
+                    alert("Something went wrong while updating room status.");
+                });
+        }
+
+        function toggleRoomLabel(checkboxId, labelId) {
+            const checkbox = document.getElementById(checkboxId);
+            const label = document.getElementById(labelId);
+            if (checkbox.checked) {
+                label.textContent = "available";
+                label.classList.remove("blocked");
+            } else {
+                label.textContent = "blocked";
+                label.classList.add("blocked");
+            }
+        }
+        window.addEventListener('DOMContentLoaded', getRoomBlockStatus);
     </script>
 
 </body>

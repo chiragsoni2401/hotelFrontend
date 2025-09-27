@@ -1,3 +1,18 @@
+//block rooms
+const roomStatusData = {
+    deluxe: "blocked",
+    superdeluxe: "blocked",
+    psuite: "blocked",
+    esuite: "blocked",
+    rsuite: "available",
+    family4: "available",
+    family5: "available",
+    family7: "available"
+};
+
+function getRoomStatus(roomType) {
+    return roomStatusData[roomType] || "not found";
+};
 //banner config
 var config = {
     isDiscountActive: false,
@@ -9,6 +24,7 @@ var config = {
     noChildCharge: false
 };
 window.addEventListener('DOMContentLoaded', getDiscount);
+window.addEventListener('DOMContentLoaded', getRoomBlockStatus);
 
 // Hero Slider Functionality
 // Hero Slider Functionality
@@ -457,7 +473,7 @@ function loadRooms() {
         <img src="${room.image}" alt="${room.title}">
         ${config.isDiscountActive ? `<div class="discount-flag">${config.discountPercent}% OFF</div>` : ''}
         <div class="room-flags">
-      ${config.isDiscountActive ? featureFlags: ''}
+      ${config.isDiscountActive ? featureFlags : ''}
     </div>
     </div>
     <div class="room-details">
@@ -471,10 +487,19 @@ function loadRooms() {
                 ₹${discountedPrice} <span>/ night</span>
                 ${config.isDiscountActive ? `<span class="original-price">₹${originalPrice}</span>` : ''}
             </span>
-            <a href="#" class="view-btn disabled" data-room="${room.id}">View Details</a>
+        ${getRoomStatus(room.roomType) == "blocked" ?
+                `
+            <a href = "#" class="view-btn disabled" data-room="${room.id}" disabled> View Details</a>
+    </div >
+            <span style="color:green">All rooms are booked</span>
+        `:
+
+                `
+            <a href = "#" class="view-btn" data-room="${room.id}"> View Details</a>
+    </div >
+  `
+            }
         </div>
-        <span style="color:green"> All rooms are booked</span>
-    </div>
 `;
 
 
@@ -607,7 +632,7 @@ function openRoomModal(roomId) {
     document.getElementById("discountOffer").innerHTML = `
         ${config.isDiscountActive ? `<div class="discount-flag">${config.discountPercent}% OFF</div>` : ''}
         <div class="room-flags">
-      ${config.isDiscountActive ? featureFlags: ''}
+      ${config.isDiscountActive ? featureFlags : ''}
     </div>`;
     // room.images.forEach((imgData, index) => {
     // const img = document.createElement("img");
@@ -1378,31 +1403,31 @@ function validateDates() {
 //checkoutInput.addEventListener('change', validateDates);
 //Function to get discount banner data
 function getDiscount() {
-//Show progress bar 
+    //Show progress bar 
     document.getElementById('floatingLoader').style.display = 'flex';
     const countdownEl = document.getElementById('loaderCountdown');
-  let remainingTime = 35; // seconds
-  let countdownInterval;
+    let remainingTime = 35; // seconds
+    let countdownInterval;
 
-  // 
-  countdownEl.textContent = `${remainingTime}s`;
-
-  // Start countdown
-  countdownInterval = setInterval(() => {
-    remainingTime--;
+    // 
     countdownEl.textContent = `${remainingTime}s`;
 
-    if (remainingTime <= 0) {
-      clearInterval(countdownInterval);
-    }
-  }, 1000);
+    // Start countdown
+    countdownInterval = setInterval(() => {
+        remainingTime--;
+        countdownEl.textContent = `${remainingTime}s`;
+
+        if (remainingTime <= 0) {
+            clearInterval(countdownInterval);
+        }
+    }, 1000);
 
     fetch(`https://royalinnbackend.onrender.com/getDiscount`, {
         method: 'GET'
     })
         .then(res => res.json())
         .then(data => {
-            document.getElementById('floatingLoader').style.display = 'none' ;
+            document.getElementById('floatingLoader').style.display = 'none';
             clearInterval(countdownInterval);
             // Validate and update config
             config.isDiscountActive = data.data.isDiscountActive ?? false;
@@ -1414,7 +1439,7 @@ function getDiscount() {
             config.noChildCharge = data.data.noChildCharge.toLowerCase() === "true" ?? false;
             // check if offer exists 
             var todayDate = new Date();
-            if(todayDate > new Date(`${config.offerEndDate}T23:59:59`)){
+            if (todayDate > new Date(`${config.offerEndDate}T23:59:59`)) {
                 config.isDiscountActive = false;
 
             }
@@ -1432,9 +1457,34 @@ function getDiscount() {
 
         })
         .catch(error => {
-            document.getElementById('floatingLoader').style.display = 'none' ;
+            document.getElementById('floatingLoader').style.display = 'none';
             clearInterval(countdownInterval);
             console.error('Error: Reading discount', error);
+
+        });
+}
+
+function getRoomBlockStatus() {
+    fetch(`https://royalinnbackend.onrender.com/getRoomBlockStatus`, {
+        method: 'GET'
+    })
+        .then(res => res.json())
+        .then(data => {
+            // Validate and update config
+            roomStatusData.deluxe = data.data.deluxe ?? "available";
+            roomStatusData.superdeluxe = data.data.superdeluxe ?? "available";
+            roomStatusData.psuite = data.data.psuite ?? "available";
+            roomStatusData.esuite = data.data.esuite ?? "available";
+            roomStatusData.rsuite = data.data.rsuite ?? "available";
+            roomStatusData.family4 = data.data.family4 ?? "available";
+            roomStatusData.family5 = data.data.family5 ?? "available";
+            roomStatusData.family7 = data.data.family7 ?? "available";
+
+
+        })
+        .catch(error => {
+
+            console.error('Error: Reading room block status', error);
 
         });
 }
