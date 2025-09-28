@@ -112,6 +112,7 @@ function initHeroSlider() {
 
 // Update your init function to include the slider
 function init() {
+    getRoomBlockStatus();
     loadRooms();
     setMinDates();
     initHeroSlider();
@@ -592,6 +593,7 @@ function stopAutoSlide() {
 
 // Start auto-slide when page loads
 window.addEventListener('load', () => {
+    getRoomBlockStatus();
     loadRooms();
     startAutoSlide();
 
@@ -1452,6 +1454,7 @@ function getDiscount() {
                 // Keep generating icons every 100ms
                 // This goes wherever you start the floating icons
                 floatingIconInterval = setInterval(createFloatingIcon, 100);
+                getRoomBlockStatus();
                 loadRooms();
             }
 
@@ -1479,7 +1482,9 @@ function getRoomBlockStatus() {
             roomStatusData.family4 = data.data.family4 ?? "available";
             roomStatusData.family5 = data.data.family5 ?? "available";
             roomStatusData.family7 = data.data.family7 ?? "available";
-
+            if (data.success) {
+                loadRooms();
+            }
 
         })
         .catch(error => {
